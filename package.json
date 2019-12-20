@@ -1,0 +1,13 @@
+{
+  "name": "frag-qora-crypto",
+  "version": "1.0.0",
+  "main": "api.js",
+  "repository": "https://github.com/frag-crypto/frag-qora-crypto.git",
+  "author": "irontiga <irontiga@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "asmcrypto.js": "^2.3.2",
+    "lit-element": "^2.2.1",
+    "ripemd160": "^2.0.2"
+  }
+}

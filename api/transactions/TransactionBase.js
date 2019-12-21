@@ -1,5 +1,5 @@
 'use strict';
-import { TX_TYPES, QORA_DECIMALS } from '../constants.js'
+import { TX_TYPES, QORT_DECIMALS } from '../constants.js'
 import nacl from '../deps/nacl-fast.js'
 import Base58 from '../deps/Base58.js'
 import utils from '../deps/utils.js'
@@ -29,7 +29,7 @@ export default class TransactionBase {
             },
             () => {
                 if (this._fee < 0) {
-                    return 'Invalid fee: ' + this._fee / QORA_DECIMALS
+                    return 'Invalid fee: ' + this._fee / QORT_DECIMALS
                 }
                 return true
             },
@@ -71,7 +71,7 @@ export default class TransactionBase {
         this._typeBytes = this.constructor.utils.int32ToBytes(this._type)
     }
     set fee (fee) {
-        this._fee = fee * QORA_DECIMALS
+        this._fee = fee * QORT_DECIMALS
         this._feeBytes = this.constructor.utils.int64ToBytes(this._fee)
     }
     set timestamp (timestamp) {

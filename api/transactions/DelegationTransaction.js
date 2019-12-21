@@ -1,6 +1,6 @@
 'use strict';
 import TransactionBase from './TransactionBase.js'
-// import { QORA_DECIMALS } from "../constants.js" // Not needed, no amount
+// import { QORT_DECIMALS } from "../constants.js" // Not needed, no amount
 
 export default class DelegationTransaction extends TransactionBase {
     constructor () {

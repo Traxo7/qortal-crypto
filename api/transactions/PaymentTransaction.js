@@ -1,6 +1,6 @@
 'use strict';
 import TransactionBase from './TransactionBase.js'
-// import { QORA_DECIMALS } from '../constants.js'
+// import { QORT_DECIMALS } from '../constants.js'
 import Base58 from '../deps/Base58.js'
 import { html } from 'lit-element'
 // import { store } from '../../store.js'

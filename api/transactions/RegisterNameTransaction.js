@@ -1,6 +1,6 @@
 "use strict";
 import TransactionBase from "./TransactionBase.js"
-import { QORA_DECIMALS } from "../constants.js"
+import { QORT_DECIMALS } from "../constants.js"
 
 // tx_hex="${tx_type}${timestamp_hex}${reference_hex}${registrant_pubkey_hex}${owner_hex}${name_size}${name_hex}${value_size}${value_hex}${fee_hex}"
 
@@ -52,7 +52,7 @@ export default class RegisterNameTransaction extends TransactionBase {
     }
 
     // set amount(amount) {
-    //     this._amount = amount * QORA_DECIMALS;
+    //     this._amount = amount * QORT_DECIMALS;
     //     this._amountBytes = this.constructor.utils.int64ToBytes(amount);
     // }
     

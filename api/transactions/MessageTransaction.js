@@ -1,6 +1,6 @@
 "use strict";
 import PaymentTransaction from "./PaymentTransaction.js"
-import { QORA_DECIMALS } from "../constants.js"
+import { QORT_DECIMALS } from "../constants.js"
 
 /* ====================================
 EXTEND THE PAYMENT TRANSACTION YOU CLOWN

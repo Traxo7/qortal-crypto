@@ -1,6 +1,6 @@
 'use strict';
 import TransactionBase from './TransactionBase.js'
-import { QORA_DECIMALS } from '../constants.js'
+import { QORT_DECIMALS } from '../constants.js'
 // import { Sha256 } from 'asmcrypto.js/dist_es5/entry-export_all.js'
 
 export default class PaymentTransaction extends TransactionBase {
@@ -11,7 +11,7 @@ export default class PaymentTransaction extends TransactionBase {
         this.tests.push(
             () => {
                 if (!(this._amount >= 0)) {
-                    return 'Invalid amount ' + this._amount / QORA_DECIMALS
+                    return 'Invalid amount ' + this._amount / QORT_DECIMALS
                 }
                 return true
             },
@@ -28,7 +28,7 @@ export default class PaymentTransaction extends TransactionBase {
         this._recipient = recipient instanceof Uint8Array ? recipient : this.constructor.Base58.decode(recipient)
     }
     set amount (amount) {
-        this._amount = amount * QORA_DECIMALS
+        this._amount = amount * QORT_DECIMALS
         this._amountBytes = this.constructor.utils.int64ToBytes(amount)
     }
 

@@ -5,13 +5,19 @@ let loaded = false
 const configWatchers = []
 const waitingForConfig = []
 
-store.subscribe(() => {
-    c = store.getState().config
-    if (!c.loaded) return
-    if (!loaded) waitingForConfig.forEach(r => r(c))
-    configWatchers.forEach(fn => fn(c))
-    config = c
-})
+const subscribeToStore = () => {
+    if (!store) return setTimeout(() => subscribeToStore(), 50) // 0.05s
+
+    store.subscribe(() => {
+        const c = store.getState().config
+        if (!c.loaded) return
+        if (!loaded) waitingForConfig.forEach(r => r(c))
+        configWatchers.forEach(fn => fn(c))
+        config = c
+    })
+}
+
+subscribeToStore()
 
 export function getConfig(){
     return config
@@ -20,7 +26,7 @@ export function getConfig(){
 export function watchConfig(fn) {
     // config ? fn(config) : void 0
     fn(config)
-    configWatchers.append(fn)
+    configWatchers.push(fn)
 }
 
 export function waitForConfig () {

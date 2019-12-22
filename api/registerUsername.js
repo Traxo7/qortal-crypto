@@ -15,10 +15,7 @@ const pendingAddresses = {}
 const checkLastRefs = () => {
     Object.entries(pendingAddresses).forEach(([address, fn]) => {
         console.log(fn, address)
-        request({
-            type: 'api',
-            url: 'addresses/lastreference/' + address
-        }).then(res => {
+        request('addresses/lastreference/' + address).then(res => {
             if (res === 'false') return
             fn(res)
             delete pendingAddresses[address]

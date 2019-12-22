@@ -1,9 +1,13 @@
 import { watchConfig, waitForConfig } from '../config.js'
 
 let config = {}
-watchConfig(c => config = c)
+watchConfig(c => { config = c })
 
-export async function request(url, { body, method = 'GET' }){
+export async function request(url, options){
+    options = options || {}
+    const body = options.body
+    const method = options.method || 'GET'
+
     await waitForConfig()
     
     const n = config.user.node
@@ -12,7 +16,7 @@ export async function request(url, { body, method = 'GET' }){
     return fetch(node + url, {
         method,
         body // If it's undefined that's fine right?
-    }).then( response => {
+    }).then(async response => {
         try {
             const json = await response.clone().json()
             return json

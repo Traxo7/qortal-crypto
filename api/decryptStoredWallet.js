@@ -3,6 +3,7 @@ import { kdf } from './kdf.js'
 import { HmacSha512, AES_CBC } from 'asmcrypto.js'
 // password = pin + birthmonth
 export const decryptStoredWallet = async (password, wallet, statusFn = () => {}) => {
+    console.log(password, wallet)
     statusFn('Decoding saved data')
     const encryptedSeedBytes = Base58.decode(wallet.encryptedSeed)
     const iv = Base58.decode(wallet.iv)
@@ -16,7 +17,7 @@ export const decryptStoredWallet = async (password, wallet, statusFn = () => {})
     const mac = new HmacSha512(macKey).process(encryptedSeedBytes).finish().result
     if (Base58.encode(mac) !== wallet.mac) {
         // throw new Error('Incorrect password')
-        throw new Error('Incorrect pin or birth month')
+        throw new Error('Incorrect password')
     }
     statusFn('Decrypting')
     const decryptedBytes = AES_CBC.decrypt(encryptedSeedBytes, encryptionKey, false, iv)

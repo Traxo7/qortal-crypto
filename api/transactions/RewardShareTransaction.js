@@ -46,22 +46,33 @@ export default class RewardShareTransaction extends TransactionBase {
     }
 
     set recipientPublicKey (recipientPublicKey) {
-        this._base58RecipientPublicKey = recipientPublicKey instanceof Uint8Array ? this.constructor.Base58.encode(recipient) : recipientPublicKey
+        this._base58RecipientPublicKey = recipientPublicKey instanceof Uint8Array ? this.constructor.Base58.encode(recipientPublicKey) : recipientPublicKey
+        this._recipientPublicKey = this.constructor.Base58.decode(this._base58RecipientPublicKey)
+        console.log(this._recipientPublicKey)
+        console.log(publicKeyToAddress)
+        this.recipient = publicKeyToAddress(this._recipientPublicKey)
         // this._rewardSharePublicKey = this.rewardShareKey
-        
-        console.log(this._keyPair)
-        this.fee = recipientPublicKey === this._keyPair.publicKey ? 0.001 : 0
+        console.log(this._recipient)
+        this.fee = (recipientPublicKey === this._keyPair.publicKey ? 0.001 : 0)
 
         // Reward share pub key
-        const convertedKeypair = ed2curve.convertKeyPair(this._keyPair)
-        const sharedSecret = nacl.box.before(this._recipientPublicKey, convertedKeypair.privateKey)
+        const convertedKeypair = ed2curve.convertKeyPair({
+            publicKey: this._keyPair.publicKey,
+            secretKey: this._keyPair.privateKey
+        })
+        console.log(convertedKeypair)
+        const sharedSecret = nacl.box.before(this._recipientPublicKey, convertedKeypair.secretKey)
         this._rewardShareSeed = new Sha256().process(sharedSecret).finish().result
         this._base58RewardShareSeed = Base58.encode(this._rewardShareSeed)
 
         this._rewardShareKeyPair = nacl.sign.keyPair.fromSeed(this._rewardShareSeed)
         console.log(this._rewardShareKeyPair)
 
-        this.recipient = publicKeyToAddress(recipientPublicKey)
+    }
+
+    set groupID (groupID) {
+        this._groupID = groupID
+        this._groupIDBytes = this.constructor.utils.int64ToBytes(groupID)
     }
 
     set recipient(recipient) { // Always Base58 encoded. Accepts Uint8Array or Base58 string.

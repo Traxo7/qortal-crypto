@@ -20,18 +20,17 @@ const publicKeyToAddress = publicKey => {
     const publicKeySha256 = new Sha256().process(publicKey).finish().result
     const publicKeyHashHex = new RIPEMD160().update(Buffer.from(publicKeySha256)).digest('hex')
     const publicKeyHash = utils.hexToBytes(publicKeyHashHex)
-
     let address = new Uint8Array()
-
+    
     address = utils.appendBuffer(address, [ADDRESS_VERSION])
     address = utils.appendBuffer(address, publicKeyHash)
 
     // const checkSum = Sha256.bytes(Sha256.bytes(address))
     const checkSum = repeatSHA256(address, 2)
-
     address = utils.appendBuffer(address, checkSum.subarray(0, 4))
     // Turn it into a string
     address = Base58.encode(address)
+    console.log(address)
     return address
 }
 

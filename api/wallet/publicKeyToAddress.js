@@ -1,4 +1,5 @@
 import RIPEMD160 from 'ripemd160'
+import BROKEN_RIPEMD160 from '../deps/broken-ripemd160.js' // THIS IS THE OLD BROKEN VERSION FROM QORA
 import { Sha256 } from 'asmcrypto.js'
 
 import utils from '../deps/utils.js'
@@ -16,10 +17,11 @@ const repeatSHA256 = (passphrase, hashes) => {
     return hash
 }
 
-const publicKeyToAddress = publicKey => {
+const publicKeyToAddress = (publicKey, qora = false) => {
     const publicKeySha256 = new Sha256().process(publicKey).finish().result
-    const publicKeyHashHex = new RIPEMD160().update(Buffer.from(publicKeySha256)).digest('hex')
-    const publicKeyHash = utils.hexToBytes(publicKeyHashHex)
+    const publicKeyHashHex = qora ? new BROKEN_RIPEMD160().digest(publicKeySha256) : new RIPEMD160().update(Buffer.from(publicKeySha256)).digest('hex')
+    // const publicKeyHashHex = new RIPEMD160().update(Buffer.from(publicKeySha256)).digest('hex')
+    const publicKeyHash = qora ? publicKeyHashHex : utils.hexToBytes(publicKeyHashHex)
     let address = new Uint8Array()
     
     address = utils.appendBuffer(address, [ADDRESS_VERSION])

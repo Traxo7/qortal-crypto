@@ -102,18 +102,26 @@ export default class PhraseWallet {
         // console.log("Seed after nonce and seed ", addrSeed)
         addrSeed = utils.appendBuffer(addrSeed, nonceBytes)
         // console.log("Appended seed ", addrSeed)
-        
+        console.log(this._walletVersion)
         // Questionable advantage to sha256d...sha256(sha256(x) + x) does not increase collisions the way sha256d does. Really nitpicky though. Note that this seed is computed from the original seed (which went through (bcrypt) so it's generation does not need to be computationally expenise
         if (this._walletVersion == 1) {
             // addrSeed = new SHA256.digest(SHA256.digest(addrSeed))
             // addrSeed = Sha256.bytes(Sha256.bytes(addrSeed))
+            addrSeed = new Sha256().process(
+                new Sha256()
+                    .process(addrSeed)
+                    .finish()
+                    .result
+                ).finish().result
+            console.log('wallet 1')
+        } else if (this._walletVersion == 2) {
             addrSeed = new Sha512().process(
                 new Sha512()
                     .process(addrSeed)
                     .finish()
                     .result
-            ).finish()
-                .result
+            ).finish().result.slice(0, 32)
+            console.log('wallet2')
         } else {
             // addrSeed = new SHA256.digest(utils.appendBuffer(SHA256.digest(addrSeed), addrSeed))
             // Why not use sha512?
@@ -123,7 +131,7 @@ export default class PhraseWallet {
             addrSeed = this._genAddressSeed(addrSeed).slice(0, 32)
         }
 
-        // console.log(addrSeed)
+        console.log(addrSeed)
         const addrKeyPair = nacl.sign.keyPair.fromSeed(new Uint8Array(addrSeed))
 
         // const publicKeyHash = new RIPEMD160().digest(Sha256.bytes(addrKeyPair.publicKey));
@@ -146,9 +154,11 @@ export default class PhraseWallet {
         // address = Base58.encode(address)
 
         const address = publicKeyToAddress(addrKeyPair.publicKey)
+        const qoraAddress = publicKeyToAddress(addrKeyPair.publicKey, true)
 
         this._addresses[nonce] = {
-            address: address,
+            address,
+            qoraAddress,
             keyPair: {
                 publicKey: addrKeyPair.publicKey,
                 privateKey: addrKeyPair.secretKey

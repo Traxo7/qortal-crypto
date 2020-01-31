@@ -2,45 +2,8 @@
 // NEEDS TO MOVE TO THE COIN-CONFIG SECTION
 
 // Qortal TX types
-// GENESIS(1, false),
-// PAYMENT(2, false),
-// REGISTER_NAME(3, true),
-// UPDATE_NAME(4, true),
-// SELL_NAME(5, false),
-// CANCEL_SELL_NAME(6, false),
-// BUY_NAME(7, false),
-// CREATE_POLL(8, true),
-// VOTE_ON_POLL(9, false),
-// ARBITRARY(10, true),
-// ISSUE_ASSET(11, true),
-// TRANSFER_ASSET(12, false),
-// CREATE_ASSET_ORDER(13, false),
-// CANCEL_ASSET_ORDER(14, false),
-// MULTI_PAYMENT(15, false),
-// DEPLOY_AT(16, true),
-// MESSAGE(17, true),
-// DELEGATION(18, false),
-// SUPERNODE(19, false),
-// AIRDROP(20, false),
-// AT(21, false),
-// CREATE_GROUP(22, true),
-// UPDATE_GROUP(23, true),
-// ADD_GROUP_ADMIN(24, false),
-// REMOVE_GROUP_ADMIN(25, false),
-// GROUP_BAN(26, false),
-// CANCEL_GROUP_BAN(27, false),
-// GROUP_KICK(28, false),
-// GROUP_INVITE(29, false),
-// CANCEL_GROUP_INVITE(30, false),
-// JOIN_GROUP(31, false),
-// LEAVE_GROUP(32, false),
-// GROUP_APPROVAL(33, false),
-// SET_GROUP(34, false),
-// UPDATE_ASSET(35, true),
-// ACCOUNT_FLAGS(36, false),
-// ENABLE_FORGING(37, false),
-// REWARD_SHARE(38, false),
-// ACCOUNT_LEVEL(39, false);
+
+
 
 const TX_TYPES = {
     1: "Genesis",
@@ -70,6 +33,30 @@ const TX_TYPES = {
     18: "Delegation",
     19: "Supernode",
     20: "Airdrop"
+
+    21: 'AT',
+
+    22: 'Create group',
+    23: 'Update group',
+    24: 'Add group admin',
+    25: 'Remove group admin',
+    26: 'Group ban',
+    27: 'Cancel group ban',
+    28: 'Group kick',
+    29: 'Group invite',
+    30: 'Cancel group invite',
+    31: 'Join group',
+    32: 'Leave group',
+    33: 'Group approval',
+    34: 'Set group',
+
+    35: 'Update asset'
+
+    36: 'Account flags',
+
+    37: 'Enable forging',
+    38: 'Reward share',
+    39: 'Account level'
 }
 
 // Qortal errors
@@ -99,6 +86,7 @@ const TX_TYPES = {
 // POLL_OPTION_DOES_NOT_EXIST(25),
 // ALREADY_VOTED_FOR_THAT_OPTION(26),
 // INVALID_DATA_LENGTH(27),
+
 // INVALID_QUANTITY(28),
 // ASSET_DOES_NOT_EXIST(29),
 // INVALID_RETURN(30),
@@ -110,7 +98,9 @@ const TX_TYPES = {
 // INVALID_CREATION_BYTES(36),
 // INVALID_TAGS_LENGTH(37),
 // INVALID_AT_TYPE_LENGTH(38),
+
 // INVALID_AT_TRANSACTION(39),
+
 // INSUFFICIENT_FEE(40),
 // ASSET_DOES_NOT_MATCH_AT(41),
 // ASSET_ALREADY_EXISTS(43),
@@ -204,21 +194,61 @@ const ERROR_CODES = {
     36: "Invalid creation bytes",
     37: "Invalid tags length",
     38: "Invalid type length",
-    
-    40: "Fee less required",
-    
-    41: "Invalid raw data",
-    
-    42: "Delegation already exists",
-    43: "Supernode invalid",
-    
-    44: "Super node already exists",
-    
-    45: "Spending disallowed",
-    
-    10000: "AT_ERROR",
 
-    1000: "Not yet released.."
+    39: 'Invalid AT transaction'
+    
+    40: "Insufficient fee",
+    
+    41: "Asset does not match AT",
+
+    43: 'Asset already exists',
+    44: 'Missing creator',
+    45: 'Timestamp too old',
+    46: 'Timestamp too new',
+    47: 'Too many unconfirmed'
+    48: 'Group already exists',
+    49: 'Group does not exist',
+    50: 'Invalid group owner',
+    51: 'Already group memeber',
+    52: 'Group owner can not leave',
+    53: 'Not group member',
+    54: 'Already group admin',
+    55: 'Not group admin',
+    56: 'Invalid lifetime',
+    57: 'Invite unknown',
+    58: 'Ben exists',
+    59: 'Ban unknown',
+    60: 'Banned from group',
+    61: 'Join request',
+    62: 'Invalid group approval threshold',
+    63: 'Group ID mismatch',
+    64: 'Invalid group ID',
+    65: 'Transaction unknown',
+    66: 'Transaction already confirmed',
+    67: 'Invalid TX group',
+    68: 'TX group ID mismatch',
+    69: 'Multiple names forbidden',
+    70: 'Invalid asset owner',
+    71: 'AT is finished',
+    72: 'No flag permission',
+    73: 'Not minting accout'
+    
+    77: 'Invalid rewardshare percent',
+    78: 'Public key unknown',
+    79: 'Invalid public key',
+    80: 'AT unknown',
+    81: 'AT already exists',
+    82: 'Group approval not required',
+    83: 'Group approval decided',
+    84: 'Maximum reward shares',
+    85: 'Transaction already exists',
+    86: 'No blockchain lock',
+    87: 'Order already closed',
+    88: 'Clock not synced',
+    89: 'Asset not spendable',
+    90: 'Account can not reward share'
+
+    1000: "Not yet released."
 }
 
 const QORT_DECIMALS = 1e8

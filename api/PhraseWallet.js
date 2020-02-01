@@ -114,14 +114,14 @@ export default class PhraseWallet {
                     .result
                 ).finish().result
             console.log('wallet 1')
-        } else if (this._walletVersion == 2) {
-            addrSeed = new Sha512().process(
-                new Sha512()
-                    .process(addrSeed)
-                    .finish()
-                    .result
-            ).finish().result.slice(0, 32)
-            console.log('wallet2')
+        // } else if (this._walletVersion == 2) {
+        //     addrSeed = new Sha512().process(
+        //         new Sha512()
+        //             .process(addrSeed)
+        //             .finish()
+        //             .result
+        //     ).finish().result//.slice(0, 32)
+        //     console.log('wallet2')
         } else {
             // addrSeed = new SHA256.digest(utils.appendBuffer(SHA256.digest(addrSeed), addrSeed))
             // Why not use sha512?

@@ -32,7 +32,7 @@ const TX_TYPES = {
 
     18: "Delegation",
     19: "Supernode",
-    20: "Airdrop"
+    20: "Airdrop",
 
     21: 'AT',
 
@@ -50,7 +50,7 @@ const TX_TYPES = {
     33: 'Group approval',
     34: 'Set group',
 
-    35: 'Update asset'
+    35: 'Update asset',
 
     36: 'Account flags',
 
@@ -195,7 +195,7 @@ const ERROR_CODES = {
     37: "Invalid tags length",
     38: "Invalid type length",
 
-    39: 'Invalid AT transaction'
+    39: 'Invalid AT transaction',
     
     40: "Insufficient fee",
     
@@ -205,7 +205,7 @@ const ERROR_CODES = {
     44: 'Missing creator',
     45: 'Timestamp too old',
     46: 'Timestamp too new',
-    47: 'Too many unconfirmed'
+    47: 'Too many unconfirmed',
     48: 'Group already exists',
     49: 'Group does not exist',
     50: 'Invalid group owner',
@@ -231,7 +231,7 @@ const ERROR_CODES = {
     70: 'Invalid asset owner',
     71: 'AT is finished',
     72: 'No flag permission',
-    73: 'Not minting accout'
+    73: 'Not minting accout',
     
     77: 'Invalid rewardshare percent',
     78: 'Public key unknown',
@@ -246,7 +246,7 @@ const ERROR_CODES = {
     87: 'Order already closed',
     88: 'Clock not synced',
     89: 'Asset not spendable',
-    90: 'Account can not reward share'
+    90: 'Account can not reward share',
 
     1000: "Not yet released."
 }

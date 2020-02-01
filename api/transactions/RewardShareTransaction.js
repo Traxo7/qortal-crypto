@@ -24,14 +24,14 @@ export default class RewardShareTransaction extends TransactionBase {
         super()
         this.type = 38
         // this.fee = 1
-        this.tests.push(
-            () => {
-                if (!(this._registrantPublicKey instanceof Uint8Array && this._registrantPublicKey.length == 32)) {
-                    return "Invalid registrant " + Base58.encode(this._registrantPublicKey)
-                }
-                return true
-            }
-        )
+        // this.tests.push(
+        //     () => {
+        //         if (!(this._registrantPublicKey instanceof Uint8Array && this._registrantPublicKey.length == 32)) {
+        //             return "Invalid registrant " + Base58.encode(this._registrantPublicKey)
+        //         }
+        //         return true
+        //     }
+        // )
     }
 
     render() {
@@ -52,7 +52,7 @@ export default class RewardShareTransaction extends TransactionBase {
         console.log(publicKeyToAddress)
         this.recipient = publicKeyToAddress(this._recipientPublicKey)
         // this._rewardSharePublicKey = this.rewardShareKey
-        console.log(this._recipient)
+        console.log(this._recipient, this._keyPair)
         this.fee = (recipientPublicKey === this._keyPair.publicKey ? 0.001 : 0)
 
         // Reward share pub key
@@ -63,11 +63,10 @@ export default class RewardShareTransaction extends TransactionBase {
         console.log(convertedKeypair)
         const sharedSecret = nacl.box.before(this._recipientPublicKey, convertedKeypair.secretKey)
         this._rewardShareSeed = new Sha256().process(sharedSecret).finish().result
-        this._base58RewardShareSeed = Base58.encode(this._rewardShareSeed)
+        this._base58RewardShareSeed = this.constructor.Base58.encode(this._rewardShareSeed)
 
         this._rewardShareKeyPair = nacl.sign.keyPair.fromSeed(this._rewardShareSeed)
         console.log(this._rewardShareKeyPair)
-
     }
 
     set groupID (groupID) {
@@ -85,10 +84,12 @@ export default class RewardShareTransaction extends TransactionBase {
     }
 
     get params() {
-        const params = super.params;
+        const params = super.params
+        console.log(this)
+        console.log(this._rewardShareKeyPair)
         params.push(
             this._recipient,
-            this._rewardShareKeypair.publicKey,
+            this._rewardShareKeyPair.publicKey,
             this._percentageShare,
             this._feeBytes
         )

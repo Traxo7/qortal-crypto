@@ -22,7 +22,7 @@ export default class TransactionBase {
         this.timestamp = Date.now()
         this.tests = [
             () => {
-                if (!(this._type >= 1 && this._type <= Object.keys(TX_TYPES).length)) {
+                if (!(this._type >= 1 && this._type in TX_TYPES)) {
                     return 'Invalid type: ' + this.type
                 }
                 return true
@@ -93,13 +93,14 @@ export default class TransactionBase {
     get signedBytes () {
         if (!this._signedBytes) {
             this.sign()
+            console.log('Got past signing...')
         }
         return this._signedBytes
     }
 
     // render function but NOT lit element
     render () {
-        return html`Please implement a render method html\`...\` in order to display requested transaction info`
+        return html`Please implement a render method (html\`...\`) in order to display requested transaction info`
     }
 
     validParams () {
@@ -123,11 +124,10 @@ export default class TransactionBase {
     generateBase () {
         const isValid = this.validParams()
         if (!isValid.valid) {
-            console.log('EERRORRR HEEEEERRREEE')
             console.log(isValid)
+            console.log(isValid.message)
             throw new Error(isValid.message)
         }
-
         let result = new Uint8Array()
 
         this.params.forEach(item => {
@@ -145,6 +145,7 @@ export default class TransactionBase {
         }
         console.log(this._keyPair)
         if (!this._base) {
+            console.log('Generating base...')
             this.generateBase()
         }
         this._signature = this.constructor.nacl.sign.detached(this._base, this._keyPair.privateKey)

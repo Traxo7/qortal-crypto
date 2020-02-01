@@ -12,11 +12,12 @@ export async function request(url, options){
     
     const n = config.user.node
     const node = n.protocol + '://' + n.domain + ':' + n.port
-
+    console.log(body)
     return fetch(node + url, {
         method,
         body // If it's undefined that's fine right?
     }).then(async response => {
+        console.log(response)
         try {
             const json = await response.clone().json()
             return json

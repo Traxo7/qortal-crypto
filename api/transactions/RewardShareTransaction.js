@@ -69,17 +69,12 @@ export default class RewardShareTransaction extends TransactionBase {
         console.log(this._rewardShareKeyPair)
     }
 
-    set groupID (groupID) {
-        this._groupID = groupID
-        this._groupIDBytes = this.constructor.utils.int64ToBytes(groupID)
-    }
-
     set recipient(recipient) { // Always Base58 encoded. Accepts Uint8Array or Base58 string.
         this._recipient = recipient instanceof Uint8Array ? recipient : this.constructor.Base58.decode(recipient)
     }
 
     set percentageShare (share) {
-        this._percentageShare = share
+        this._percentageShare = share * 1e8
         this._percentageShareBytes = this.constructor.utils.int64ToBytes(this._percentageShare)
     }
 
@@ -90,7 +85,7 @@ export default class RewardShareTransaction extends TransactionBase {
         params.push(
             this._recipient,
             this._rewardShareKeyPair.publicKey,
-            this._percentageShare,
+            this._percentageShareBytes,
             this._feeBytes
         )
         return params;

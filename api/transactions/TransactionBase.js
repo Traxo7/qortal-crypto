@@ -19,6 +19,7 @@ export default class TransactionBase {
     constructor () {
         // Defaults
         this.fee = 0
+        this.groupID = 0
         this.timestamp = Date.now()
         this.tests = [
             () => {
@@ -30,6 +31,12 @@ export default class TransactionBase {
             () => {
                 if (this._fee < 0) {
                     return 'Invalid fee: ' + this._fee / QORT_DECIMALS
+                }
+                return true
+            },
+            () => {
+                if (this._groupID < 0 || !Number.isInteger(this._groupID)) {
+                    return 'Invalid groupID: ' + this._groupID
                 }
                 return true
             },
@@ -70,13 +77,17 @@ export default class TransactionBase {
         this._type = type
         this._typeBytes = this.constructor.utils.int32ToBytes(this._type)
     }
-    set fee (fee) {
-        this._fee = fee * QORT_DECIMALS
-        this._feeBytes = this.constructor.utils.int64ToBytes(this._fee)
+    set groupID (groupID) {
+        this._groupID = groupID
+        this._groupIDBytes = this.constructor.utils.int32ToBytes(this._groupID)
     }
     set timestamp (timestamp) {
         this._timestamp = timestamp
         this._timestampBytes = this.constructor.utils.int64ToBytes(this._timestamp)
+    }
+    set fee (fee) {
+        this._fee = fee * QORT_DECIMALS
+        this._feeBytes = this.constructor.utils.int64ToBytes(this._fee)
     }
     set lastReference (lastReference) { // Always Base58 encoded. Accepts Uint8Array or Base58 string.
         // lastReference could be a string or an Uint8Array
@@ -86,6 +97,7 @@ export default class TransactionBase {
         return [
             this._typeBytes,
             this._timestampBytes,
+            this._groupIDBytes,
             this._lastReference,
             this._keyPair.publicKey
         ]

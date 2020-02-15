@@ -111,7 +111,7 @@ export default class TransactionBase {
     }
 
     // render function but NOT lit element
-    render () {
+    get template () {
         return html`Please implement a render method (html\`...\`) in order to display requested transaction info`
     }
 

@@ -12,9 +12,10 @@ export const createTransaction = (type, keyPair, params) => {
         tx[param] = params[param]
     })
     // console.log('Got to signing part...')
-    const response = tx.signedBytes
-    console.log(response)
-    return response
+    // const response = tx.signedBytes
+    // console.log(response)
+    // return response
+    return tx
 }
 
 export const processTransaction = bytes => request('/transactions/process', {

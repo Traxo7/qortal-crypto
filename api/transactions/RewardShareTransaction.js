@@ -34,7 +34,7 @@ export default class RewardShareTransaction extends TransactionBase {
         // )
     }
 
-    render() {
+    get template () {
         return html`
             Would you like to create a reward share transaction, sharing ${this._percentageShare}% of your minting rewards with ${this.recipient}? 
             If yes, you will need to save the key below in order to mint. It can be supplied to any node in order to allow it to mint on your behalf.

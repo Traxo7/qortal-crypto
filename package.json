@@ -2,7 +2,7 @@
   "name": "frag-qortal-crypto",
   "version": "1.0.0",
   "main": "api.js",
-  "repository": "https://github.com/frag-crypto/frag-qora-crypto.git",
+  "repository": "https://github.com/frag-crypto/frag-qortal-crypto.git",
   "author": "irontiga <irontiga@gmail.com>",
   "license": "MIT",
   "dependencies": {

@@ -1,6 +1,6 @@
 {
-  "name": "frag-qortal-crypto",
-  "version": "1.0.0",
+  "name": "@frag-crypto/frag-qortal-crypto",
+  "version": "0.0.0",
   "main": "api.js",
   "repository": "https://github.com/frag-crypto/frag-qortal-crypto.git",
   "author": "irontiga <irontiga@gmail.com>",

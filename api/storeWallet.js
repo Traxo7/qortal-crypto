@@ -5,9 +5,7 @@ import Base58 from './deps/Base58.js'
 
 const getRandomValues = window.crypto ? window.crypto.getRandomValues.bind(window.crypto) : window.msCrypto.getRandomValues.bind(window.msCrypto)
 
-// export const generateSaveSeedData = async (seed, version, name, password) => {
 export const generateSaveWalletData = async (wallet, password, kdfThreads, statusUpdateFn) => {
-    console.log('SAVING WALLET')
     statusUpdateFn('Generating random values')
     let iv = new Uint8Array(16)
     getRandomValues(iv)

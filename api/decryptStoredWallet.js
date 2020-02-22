@@ -3,7 +3,6 @@ import { kdf } from './kdf.js'
 import { HmacSha512, AES_CBC } from 'asmcrypto.js'
 // password = pin + birthmonth
 export const decryptStoredWallet = async (password, wallet, statusFn = () => {}) => {
-    console.log(password, wallet)
     statusFn('Decoding saved data')
     const encryptedSeedBytes = Base58.decode(wallet.encryptedSeed)
     const iv = Base58.decode(wallet.iv)

@@ -172,6 +172,7 @@ export default class PhraseWallet {
 
     // password, kdfThreads, statusUpdateFn
     generateSaveWalletData (...args) {
+        // return generateSaveWalletData(this, ...args)
         return generateSaveWalletData(this, ...args)
     }
 }

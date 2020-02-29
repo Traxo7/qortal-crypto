@@ -2,7 +2,6 @@
 import TransactionBase from './TransactionBase.js'
 // import { QORT_DECIMALS } from '../constants.js'
 import Base58 from '../deps/Base58.js'
-import { html } from 'lit-element'
 // import { store } from '../../store.js'
 import { store } from '../../api.js'
 
@@ -44,7 +43,7 @@ export default class PaymentTransaction extends TransactionBase {
         return params
     }
 
-    render () {
+    render(html) {
         const conf = store.getState().config
         console.log(conf.coin)
         console.log(this)

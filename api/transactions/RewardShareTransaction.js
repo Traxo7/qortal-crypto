@@ -17,7 +17,6 @@ import { QORT_DECIMALS } from "../constants.js"
 import nacl from '../deps/nacl-fast.js'
 import ed2curve from '../deps/ed2curve.js'
 import { Sha256 } from 'asmcrypto.js'
-import { html } from 'lit-element'
 
 export default class RewardShareTransaction extends TransactionBase {
     constructor() {
@@ -52,8 +51,8 @@ export default class RewardShareTransaction extends TransactionBase {
         console.log(publicKeyToAddress)
         this.recipient = publicKeyToAddress(this._recipientPublicKey)
         // this._rewardSharePublicKey = this.rewardShareKey
-        console.log(this._recipient, this._keyPair)
-        this.fee = (recipientPublicKey === this._keyPair.publicKey ? 0.001 : 0)
+        console.log(recipientPublicKey, this._keyPair)
+        this.fee = (recipientPublicKey === this.constructor.Base58.encode(this._keyPair.publicKey) ? 0 : 0.001)
 
         // Reward share pub key
         const convertedKeypair = ed2curve.convertKeyPair({

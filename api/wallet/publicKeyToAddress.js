@@ -32,7 +32,7 @@ const publicKeyToAddress = (publicKey, qora = false) => {
     address = utils.appendBuffer(address, checkSum.subarray(0, 4))
     // Turn it into a string
     address = Base58.encode(address)
-    console.log(address)
+    // console.log(address)
     return address
 }
 

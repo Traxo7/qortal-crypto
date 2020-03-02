@@ -48,7 +48,7 @@ export default class TransactionBase {
             },
             () => {
                 if (!(this._lastReference instanceof Uint8Array && this._lastReference.byteLength == 64)) {
-                    console.log(this._lastReference)
+                    // console.log(this._lastReference)
                     return 'Invalid last reference: ' + this._lastReference
                 }
                 return true
@@ -105,7 +105,7 @@ export default class TransactionBase {
     get signedBytes () {
         if (!this._signedBytes) {
             this.sign()
-            console.log('Got past signing...')
+            // console.log('Got past signing...')
         }
         return this._signedBytes
     }
@@ -136,8 +136,8 @@ export default class TransactionBase {
     generateBase () {
         const isValid = this.validParams()
         if (!isValid.valid) {
-            console.log(isValid)
-            console.log(isValid.message)
+            // console.log(isValid)
+            // console.log(isValid.message)
             throw new Error(isValid.message)
         }
         let result = new Uint8Array()
@@ -155,9 +155,9 @@ export default class TransactionBase {
         if (!this._keyPair) {
             throw new Error('keyPair not defined')
         }
-        console.log(this._keyPair)
+        // console.log(this._keyPair)
         if (!this._base) {
-            console.log('Generating base...')
+            // console.log('Generating base...')
             this.generateBase()
         }
         this._signature = this.constructor.nacl.sign.detached(this._base, this._keyPair.privateKey)

@@ -29,7 +29,7 @@ export default class PaymentTransaction extends TransactionBase {
         this._recipient = recipient instanceof Uint8Array ? recipient : this.constructor.Base58.decode(recipient)
     }
     set amount (amount) {
-        console.log('=====AOUMNTNT ',amount, store.getState().config.coin.decimals)
+        // console.log('=====AOUMNTNT ',amount, store.getState().config.coin.decimals)
         this._amount = amount * store.getState().config.coin.decimals
         this._amountBytes = this.constructor.utils.int64ToBytes(amount)
     }
@@ -45,8 +45,8 @@ export default class PaymentTransaction extends TransactionBase {
 
     render(html) {
         const conf = store.getState().config
-        console.log(conf.coin)
-        console.log(this)
+        // console.log(conf.coin)
+        // console.log(this)
         return html`
             <table>
                 <tr>

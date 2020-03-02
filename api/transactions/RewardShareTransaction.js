@@ -47,11 +47,11 @@ export default class RewardShareTransaction extends TransactionBase {
     set recipientPublicKey (recipientPublicKey) {
         this._base58RecipientPublicKey = recipientPublicKey instanceof Uint8Array ? this.constructor.Base58.encode(recipientPublicKey) : recipientPublicKey
         this._recipientPublicKey = this.constructor.Base58.decode(this._base58RecipientPublicKey)
-        console.log(this._recipientPublicKey)
-        console.log(publicKeyToAddress)
+        // console.log(this._recipientPublicKey)
+        // console.log(publicKeyToAddress)
         this.recipient = publicKeyToAddress(this._recipientPublicKey)
         // this._rewardSharePublicKey = this.rewardShareKey
-        console.log(recipientPublicKey, this._keyPair)
+        // console.log(recipientPublicKey, this._keyPair)
         this.fee = (recipientPublicKey === this.constructor.Base58.encode(this._keyPair.publicKey) ? 0 : 0.001)
 
         // Reward share pub key
@@ -59,13 +59,13 @@ export default class RewardShareTransaction extends TransactionBase {
             publicKey: this._keyPair.publicKey,
             secretKey: this._keyPair.privateKey
         })
-        console.log(convertedKeypair)
+        // console.log(convertedKeypair)
         const sharedSecret = nacl.box.before(this._recipientPublicKey, convertedKeypair.secretKey)
         this._rewardShareSeed = new Sha256().process(sharedSecret).finish().result
         this._base58RewardShareSeed = this.constructor.Base58.encode(this._rewardShareSeed)
 
         this._rewardShareKeyPair = nacl.sign.keyPair.fromSeed(this._rewardShareSeed)
-        console.log(this._rewardShareKeyPair)
+        // console.log(this._rewardShareKeyPair)
     }
 
     set recipient(recipient) { // Always Base58 encoded. Accepts Uint8Array or Base58 string.
@@ -79,8 +79,8 @@ export default class RewardShareTransaction extends TransactionBase {
 
     get params() {
         const params = super.params
-        console.log(this)
-        console.log(this._rewardShareKeyPair)
+        // console.log(this)
+        // console.log(this._rewardShareKeyPair)
         params.push(
             this._recipient,
             this._rewardShareKeyPair.publicKey,

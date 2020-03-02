@@ -14,7 +14,7 @@ const pendingAddresses = {}
 
 const checkLastRefs = () => {
     Object.entries(pendingAddresses).forEach(([address, fn]) => {
-        console.log(fn, address)
+        // console.log(fn, address)
         request('addresses/lastreference/' + address).then(res => {
             if (res === 'false') return
             fn(res)

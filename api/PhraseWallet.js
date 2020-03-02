@@ -102,7 +102,7 @@ export default class PhraseWallet {
         // console.log("Seed after nonce and seed ", addrSeed)
         addrSeed = utils.appendBuffer(addrSeed, nonceBytes)
         // console.log("Appended seed ", addrSeed)
-        console.log(this._walletVersion)
+        // console.log(this._walletVersion)
         // Questionable advantage to sha256d...sha256(sha256(x) + x) does not increase collisions the way sha256d does. Really nitpicky though. Note that this seed is computed from the original seed (which went through (bcrypt) so it's generation does not need to be computationally expenise
         if (this._walletVersion == 1) {
             // addrSeed = new SHA256.digest(SHA256.digest(addrSeed))
@@ -113,7 +113,7 @@ export default class PhraseWallet {
                     .finish()
                     .result
                 ).finish().result
-            console.log('wallet 1')
+            // console.log('wallet 1')
         // } else if (this._walletVersion == 2) {
         //     addrSeed = new Sha512().process(
         //         new Sha512()
@@ -131,7 +131,7 @@ export default class PhraseWallet {
             addrSeed = this._genAddressSeed(addrSeed).slice(0, 32)
         }
 
-        console.log(addrSeed)
+        // console.log(addrSeed)
         const addrKeyPair = nacl.sign.keyPair.fromSeed(new Uint8Array(addrSeed))
 
         // const publicKeyHash = new RIPEMD160().digest(Sha256.bytes(addrKeyPair.publicKey));

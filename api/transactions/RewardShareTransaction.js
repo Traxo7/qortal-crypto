@@ -54,13 +54,11 @@ export default class RewardShareTransaction extends TransactionBase {
         // console.log(recipientPublicKey, this._keyPair)
         this.fee = (recipientPublicKey === this.constructor.Base58.encode(this._keyPair.publicKey) ? 0 : 0.001)
 
-        // Reward share pub key
-        const convertedKeypair = ed2curve.convertKeyPair({
-            publicKey: this._keyPair.publicKey,
-            secretKey: this._keyPair.privateKey
-        })
-        // console.log(convertedKeypair)
-        const sharedSecret = nacl.box.before(this._recipientPublicKey, convertedKeypair.secretKey)
+        // Reward share keys
+        const convertedPrivateKey = ed2curve.convertSecretKey(this._keyPair.privateKey)
+        const convertedPublicKey = ed2curve.convertPublicKey(this._recipientPublicKey)
+        const sharedSecret = new Uint8Array(32);
+        nacl.lowlevel.crypto_scalarmult(sharedSecret, convertedPrivateKey, convertedPublicKey);
         this._rewardShareSeed = new Sha256().process(sharedSecret).finish().result
         this._base58RewardShareSeed = this.constructor.Base58.encode(this._rewardShareSeed)
 

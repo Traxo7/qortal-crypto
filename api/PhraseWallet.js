@@ -113,6 +113,9 @@ export default class PhraseWallet {
                     .finish()
                     .result
                 ).finish().result
+
+            // Forget wallet seed, use _byteSeed as address seed
+            addrSeed = this._byteSeed
             // console.log('wallet 1')
         // } else if (this._walletVersion == 2) {
         //     addrSeed = new Sha512().process(

@@ -1,9 +1,9 @@
 {
-  "name": "@frag-crypto/frag-qortal-crypto",
-  "version": "0.0.2",
+  "name": "qortal-ui-crypto",
+  "version": "1.0.0",
   "main": "api.js",
-  "repository": "https://github.com/frag-crypto/frag-qortal-crypto.git",
-  "author": "irontiga <irontiga@gmail.com>",
+  "repository": "https://github.com/QORT/qortal-ui-crypto.git",
+  "author": "QORTAL <admin@qortal.org>",
   "license": "MIT",
   "dependencies": {
     "asmcrypto.js": "^2.3.2",

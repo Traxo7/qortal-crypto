@@ -8,26 +8,26 @@
 const TX_TYPES = {
     1: "Genesis",
     2: "Payment",
-    
+
     3: "Name registration",
     4: "Name update",
     5: "Sell name",
     6: "Cancel sell name",
     7: "Buy name",
-    
+
     8: "Create poll",
     9: "Vote in poll",
-    
+
     10: "Arbitrary",
-    
+
     11: "Issue asset",
     12: "Transfer asset",
     13: "Create asset order",
     14: "Cancel asset order",
     15: "Multi-payment transaction",
-    
+
     16: "Deploy AT",
-    
+
     17: "Message",
 
     18: "Delegation",
@@ -56,7 +56,9 @@ const TX_TYPES = {
 
     37: 'Enable forging',
     38: 'Reward share',
-    39: 'Account level'
+    39: 'Account level',
+
+    138: 'Remove Reward share'
 }
 
 // Qortal errors
@@ -196,9 +198,9 @@ const ERROR_CODES = {
     38: "Invalid type length",
 
     39: 'Invalid AT transaction',
-    
+
     40: "Insufficient fee",
-    
+
     41: "Asset does not match AT",
 
     43: 'Asset already exists',
@@ -232,7 +234,7 @@ const ERROR_CODES = {
     71: 'AT is finished',
     72: 'No flag permission',
     73: 'Not minting accout',
-    
+
     77: 'Invalid rewardshare percent',
     78: 'Public key unknown',
     79: 'Invalid public key',

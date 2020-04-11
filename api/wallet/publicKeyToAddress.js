@@ -23,7 +23,7 @@ const publicKeyToAddress = (publicKey, qora = false) => {
     // const publicKeyHashHex = new RIPEMD160().update(Buffer.from(publicKeySha256)).digest('hex')
     const publicKeyHash = qora ? publicKeyHashHex : utils.hexToBytes(publicKeyHashHex)
     let address = new Uint8Array()
-    
+
     address = utils.appendBuffer(address, [ADDRESS_VERSION])
     address = utils.appendBuffer(address, publicKeyHash)
 

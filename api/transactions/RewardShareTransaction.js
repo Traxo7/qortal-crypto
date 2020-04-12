@@ -33,9 +33,15 @@ export default class RewardShareTransaction extends TransactionBase {
         // )
     }
 
-    render (html) {
-        return html`
-            Would you like to create a reward share transaction, sharing <strong>${this._percentageShare}%</strong> of your minting rewards with <strong>${this.constructor.Base58.encode(this._recipient)}</strong>? 
+    render(html) {
+        return this._percentageShare / 1e8 === -1 ? html`
+            You are removing a reward share transaction associated with account: <strong>${this.constructor.Base58.encode(this._recipient)}</strong>.
+            <div style="background:#eee; padding:8px; margin:8px 0; border-radius:2px;">
+                <span>${this._base58RewardShareSeed}</span>
+            </div>
+            On pressing confirm, the rewardshare will be removed and the above key will become invalid.
+        ` : html`
+            Would you like to create a reward share transaction, sharing <strong>${this._percentageShare / 1e8}%</strong> of your minting rewards with <strong>${this.constructor.Base58.encode(this._recipient)}</strong>? 
             If yes, you will need to save the key below in order to mint. It can be supplied to any node in order to allow it to mint on your behalf.
             <div style="background:#eee; padding:8px; margin:8px 0; border-radius:2px;">
                 <span>${this._base58RewardShareSeed}</span>
@@ -44,7 +50,7 @@ export default class RewardShareTransaction extends TransactionBase {
         `
     }
 
-    set recipientPublicKey (recipientPublicKey) {
+    set recipientPublicKey(recipientPublicKey) {
         this._base58RecipientPublicKey = recipientPublicKey instanceof Uint8Array ? this.constructor.Base58.encode(recipientPublicKey) : recipientPublicKey
         this._recipientPublicKey = this.constructor.Base58.decode(this._base58RecipientPublicKey)
         // console.log(this._recipientPublicKey)
@@ -70,7 +76,7 @@ export default class RewardShareTransaction extends TransactionBase {
         this._recipient = recipient instanceof Uint8Array ? recipient : this.constructor.Base58.decode(recipient)
     }
 
-    set percentageShare (share) {
+    set percentageShare(share) {
         this._percentageShare = share * 1e8
         this._percentageShareBytes = this.constructor.utils.int64ToBytes(this._percentageShare)
     }

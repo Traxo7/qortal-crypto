@@ -6,7 +6,7 @@ import Base58 from '../deps/Base58.js'
 import { store } from '../../api.js'
 
 export default class PaymentTransaction extends TransactionBase {
-    constructor () {
+    constructor() {
         super()
         this.type = 2
         this.tests.push(
@@ -25,15 +25,16 @@ export default class PaymentTransaction extends TransactionBase {
         )
     }
 
-    set recipient (recipient) { // Always Base58 encoded. Accepts Uint8Array or Base58 string.
+    set recipient(recipient) { // Always Base58 encoded. Accepts Uint8Array or Base58 string.
         this._recipient = recipient instanceof Uint8Array ? recipient : this.constructor.Base58.decode(recipient)
     }
-    set amount (amount) {
-        // console.log('=====AOUMNTNT ',amount, store.getState().config.coin.decimals)
+    set amount(amount) {
+        // console.log('=====DECIMALS ', store.getState().config.coin.decimals)
+        // console.log("IINIT AMOUNT: ", amount);
         this._amount = amount * store.getState().config.coin.decimals
-        this._amountBytes = this.constructor.utils.int64ToBytes(amount)
+        this._amountBytes = this.constructor.utils.int64ToBytes(this._amount)
     }
-    get params () {
+    get params() {
         const params = super.params
         params.push(
             this._recipient,
@@ -45,7 +46,6 @@ export default class PaymentTransaction extends TransactionBase {
 
     render(html) {
         const conf = store.getState().config
-        // console.log(conf.coin)
         // console.log(this)
         return html`
             <table>

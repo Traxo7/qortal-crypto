@@ -57,8 +57,6 @@ const TX_TYPES = {
     37: 'Enable forging',
     38: 'Reward share',
     39: 'Account level',
-
-    138: 'Remove Reward share'
 }
 
 // Qortal errors

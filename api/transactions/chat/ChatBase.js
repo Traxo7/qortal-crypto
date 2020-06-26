@@ -1,11 +1,10 @@
 'use strict';
-import { TX_TYPES, QORT_DECIMALS } from '../constants.js'
-import nacl from '../deps/nacl-fast.js'
-import Base58 from '../deps/Base58.js'
-import utils from '../deps/utils.js'
-// import { html } from 'lit-element'
+import { TX_TYPES, QORT_DECIMALS } from '../../constants.js'
+import nacl from '../../deps/nacl-fast.js'
+import Base58 from '../../deps/Base58.js'
+import utils from '../../deps/utils.js'
 
-export default class TransactionBase {
+export default class ChatBase {
     static get utils() {
         return utils
     }
@@ -17,10 +16,8 @@ export default class TransactionBase {
     }
 
     constructor() {
-        // Defaults
         this.fee = 0
         this.groupID = 0
-        this.timestamp = Date.now()
         this.tests = [
             () => {
                 if (!(this._type >= 1 && this._type in TX_TYPES)) {
@@ -72,7 +69,6 @@ export default class TransactionBase {
     }
     set type(type) {
         this.typeText = TX_TYPES[type]
-        // this._type = TX_TYPES[type];
         this._type = type
         this._typeBytes = this.constructor.utils.int32ToBytes(this._type)
     }
@@ -88,11 +84,11 @@ export default class TransactionBase {
         this._fee = fee * QORT_DECIMALS
         this._feeBytes = this.constructor.utils.int64ToBytes(this._fee)
     }
-    set lastReference(lastReference) { // Always Base58 encoded. Accepts Uint8Array or Base58 string.
-        // lastReference could be a string or an Uint8Array
+    set lastReference(lastReference) {
         this._lastReference = lastReference instanceof Uint8Array ? lastReference : this.constructor.Base58.decode(lastReference)
     }
     get params() {
+
         return [
             this._typeBytes,
             this._timestampBytes,
@@ -101,23 +97,30 @@ export default class TransactionBase {
             this._keyPair.publicKey
         ]
     }
-    get signedBytes() {
-        if (!this._signedBytes) {
-            this.sign()
-        }
-        return this._signedBytes
-    }
 
-    // render function but NOT lit element
-    render(html) {
-        return html`Please implement a render method (html\`...\`) in order to display requested transaction info`
+    get chatBytes() {
+
+        const isValid = this.validParams()
+        if (!isValid.valid) {
+            throw new Error(isValid.message)
+        }
+
+        let result = new Uint8Array()
+
+        this.params.forEach(item => {
+            result = this.constructor.utils.appendBuffer(result, item)
+        })
+
+        this._chatBytes = result
+
+        return this._chatBytes
     }
 
     validParams() {
         let finalResult = {
             valid: true
         }
-        // const valid =
+
         this.tests.some(test => {
             const result = test()
             if (result !== true) {
@@ -125,40 +128,10 @@ export default class TransactionBase {
                     valid: false,
                     message: result
                 }
-                return true // exists the loop
+                return true
             }
         })
         return finalResult
     }
 
-    generateBase() {
-        const isValid = this.validParams()
-        if (!isValid.valid) {
-            throw new Error(isValid.message)
-        }
-        let result = new Uint8Array()
-
-        this.params.forEach(item => {
-            result = this.constructor.utils.appendBuffer(result, item)
-        })
-
-        this._base = result
-        return result
-    }
-
-    sign() {
-        if (!this._keyPair) {
-            throw new Error('keyPair not defined')
-        }
-
-        if (!this._base) {
-            this.generateBase()
-        }
-
-        this._signature = this.constructor.nacl.sign.detached(this._base, this._keyPair.privateKey)
-
-        this._signedBytes = this.constructor.utils.appendBuffer(this._base, this._signature)
-
-        return this._signature
-    }
 }

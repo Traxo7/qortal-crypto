@@ -9,17 +9,18 @@ const subscribeToStore = () => {
     if (!store) return setTimeout(() => subscribeToStore(), 50) // 0.05s
 
     store.subscribe(() => {
+        const cA = store.getState().app
         const c = store.getState().config
         if (!c.loaded) return
-        if (!loaded) waitingForConfig.forEach(r => r(c))
-        configWatchers.forEach(fn => fn(c))
-        config = c
+        if (!loaded) waitingForConfig.forEach(r => r(cA))
+        configWatchers.forEach(fn => fn(cA))
+        config = cA
     })
 }
 
 subscribeToStore()
 
-export function getConfig(){
+export function getConfig() {
     return config
 }
 
@@ -29,7 +30,7 @@ export function watchConfig(fn) {
     configWatchers.push(fn)
 }
 
-export function waitForConfig () {
+export function waitForConfig() {
     return new Promise((resolve, reject) => {
         if (config) return resolve(config)
         waitingForConfig.push(resolve)

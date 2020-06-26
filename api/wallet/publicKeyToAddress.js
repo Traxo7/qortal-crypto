@@ -30,9 +30,9 @@ const publicKeyToAddress = (publicKey, qora = false) => {
     // const checkSum = Sha256.bytes(Sha256.bytes(address))
     const checkSum = repeatSHA256(address, 2)
     address = utils.appendBuffer(address, checkSum.subarray(0, 4))
-    // Turn it into a string
+
     address = Base58.encode(address)
-    // console.log(address)
+
     return address
 }
 

@@ -8,6 +8,7 @@
   "dependencies": {
     "asmcrypto.js": "^2.3.2",
     "lit-element": "^2.2.1",
+    "lodash": "^4.17.15",
     "ripemd160": "^2.0.2"
   }
 }

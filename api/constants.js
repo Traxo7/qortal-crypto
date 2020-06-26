@@ -30,8 +30,8 @@ const TX_TYPES = {
 
     17: "Message",
 
-    18: "Delegation",
-    19: "Supernode",
+    18: "Chat",
+    19: "Publicize",
     20: "Airdrop",
 
     21: 'AT',

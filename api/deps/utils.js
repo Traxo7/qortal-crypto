@@ -1,6 +1,6 @@
 'use strict'
 const utils = {
-    int32ToBytes (word) {
+    int32ToBytes(word) {
         var byteArray = []
         for (var b = 0; b < 32; b += 8) {
             byteArray.push((word >>> (24 - b % 32)) & 0xFF)
@@ -8,7 +8,7 @@ const utils = {
         return byteArray
     },
 
-    stringtoUTF8Array (message) {
+    stringtoUTF8Array(message) {
         if (typeof message === 'string') {
             var s = unescape(encodeURIComponent(message)) // UTF-8
             message = new Uint8Array(s.length)
@@ -19,7 +19,7 @@ const utils = {
         return message
     },
     // ...buffers then buffers.foreach and append to buffer1
-    appendBuffer (buffer1, buffer2) {
+    appendBuffer(buffer1, buffer2) {
         buffer1 = new Uint8Array(buffer1)
         buffer2 = new Uint8Array(buffer2)
         let tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength)
@@ -28,28 +28,28 @@ const utils = {
         return tmp
     },
 
-    int64ToBytes (int64) {
+    int64ToBytes(int64) {
         // we want to represent the input as a 8-bytes array
         var byteArray = [0, 0, 0, 0, 0, 0, 0, 0]
 
         for (var index = 0; index < byteArray.length; index++) {
             var byte = int64 & 0xff
-            byteArray[ byteArray.length - index - 1 ] = byte
-            int64 = (int64 - byte) / 256 
+            byteArray[byteArray.length - index - 1] = byte
+            int64 = (int64 - byte) / 256
         }
 
         return byteArray
     },
 
-    hexToBytes (hexString) {
+    hexToBytes(hexString) {
         return new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)))
     },
 
-    stringToHex (bytes) {
+    stringToHex(bytes) {
         return bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '')
     },
 
-    equal (buf1, buf2) {
+    equal(buf1, buf2) {
         if (buf1.byteLength != buf2.byteLength) return false
         var dv1 = new Uint8Array(buf1)
         var dv2 = new Uint8Array(buf2)
@@ -61,29 +61,3 @@ const utils = {
 }
 
 export default utils
-
-// const TransactionTypes =  {
-//    GENESIS_TRANSACTION: 1,
-//    PAYMENT_TRANSACTION: 2,
-//
-//    REGISTER_NAME_TRANSACTION: 3,
-//    UPDATE_NAME_TRANSACTION: 4,
-//    SELL_NAME_TRANSACTION: 5,
-//    CANCEL_SELL_NAME_TRANSACTION: 6,
-//    BUY_NAME_TRANSACTION: 7,
-//
-//    CREATE_POLL_TRANSACTION: 8,
-//    VOTE_ON_POLL_TRANSACTION: 9,
-//
-//    ARBITRARY_TRANSACTION: 10,
-//
-//    ISSUE_ASSET_TRANSACTION: 11,
-//    TRANSFER_ASSET_TRANSACTION: 12,
-//    CREATE_ORDER_TRANSACTION: 13,
-//    CANCEL_ORDER_TRANSACTION: 14,
-//    MULTI_PAYMENT_TRANSACTION: 15,
-//
-//    DEPLOY_AT_TRANSACTION: 16,
-//
-//    MESSAGE_TRANSACTION: 17
-// };

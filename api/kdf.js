@@ -1,12 +1,9 @@
 import { store } from '../api_deps.js'
 import { stateAwait } from './utils/stateAwait.js'
-// import { store } from '../store.js'
 import { Sha512 } from 'asmcrypto.js'
-// import utils from '../qora/deps/utils.js'
 import utils from '../api/deps/utils.js'
-// import { HmacSha512, AES_CBC, Sha512, base64_to_bytes, bytes_to_base64 } from "asmcrypto.js"
 
-export const kdf = async (seed, salt, status = () => {}) => {
+export const kdf = async (seed, salt, status = () => { }) => {
     const state = store.getState()
     const config = state.config
     const workers = state.app.workers.workers
@@ -23,15 +20,12 @@ export const kdf = async (seed, salt, status = () => {}) => {
             staticSalt: config.crypto.staticSalt,
             staticBcryptSalt: config.crypto.staticBcryptSalt
         }).then(data => {
-            // console.log('response:', data)
-            // Hmmm... it's not json?
-            // data = JSON.parse(data)
             let jsonData
             try {
                 jsonData = JSON.parse(data)
                 data = jsonData
-            } catch (e) { 
-                // console.error ('JSON NO WORKEY', e) 
+            } catch (e) {
+                // ...
             }
             if (seed !== data.key) throw new Error('Error, incorrect key. ' + seed + ' !== ' + data.key)
             if (nonce !== data.nonce) throw new Error('Error, incorrect nonce')

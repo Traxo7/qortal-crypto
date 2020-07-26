@@ -1,46 +1,19 @@
-// layout.add("txType: " + TransactionType.REWARD_SHARE.valueString, TransformationType.INT);
-// layout.add("timestamp", TransformationType.TIMESTAMP);
-// layout.add("transaction's groupID", TransformationType.INT);
-// layout.add("reference", TransformationType.SIGNATURE);
-// layout.add("minter's public key", TransformationType.PUBLIC_KEY);
-// layout.add("recipient account's address", TransformationType.ADDRESS);
-// layout.add("reward-share public key", TransformationType.PUBLIC_KEY);
-// layout.add("recipient's percentage share of block rewards", TransformationType.AMOUNT);
-// layout.add("fee", TransformationType.AMOUNT);
-// layout.add("signature", TransformationType.SIGNATURE);
-
-import publicKeyToAddress from '../wallet/publicKeyToAddress.js'
+import publicKeyToAddress from '../../wallet/publicKeyToAddress.js'
 
 "use strict";
-import TransactionBase from "./TransactionBase.js"
-import { QORT_DECIMALS } from "../constants.js"
-import nacl from '../deps/nacl-fast.js'
-import ed2curve from '../deps/ed2curve.js'
+import TransactionBase from "../TransactionBase.js"
+import nacl from '../../deps/nacl-fast.js'
+import ed2curve from '../../deps/ed2curve.js'
 import { Sha256 } from 'asmcrypto.js'
 
 export default class RewardShareTransaction extends TransactionBase {
     constructor() {
         super()
         this.type = 38
-        // this.fee = 1
-        // this.tests.push(
-        //     () => {
-        //         if (!(this._registrantPublicKey instanceof Uint8Array && this._registrantPublicKey.length == 32)) {
-        //             return "Invalid registrant " + Base58.encode(this._registrantPublicKey)
-        //         }
-        //         return true
-        //     }
-        // )
     }
 
     render(html) {
-        return this._percentageShare / 1e8 === -1 ? html`
-            You are removing a reward share transaction associated with account: <strong>${this.constructor.Base58.encode(this._recipient)}</strong>.
-            <div style="background:#eee; padding:8px; margin:8px 0; border-radius:2px;">
-                <span>${this._base58RewardShareSeed}</span>
-            </div>
-            On pressing confirm, the rewardshare will be removed and the above key will become invalid.
-        ` : html`
+        return html`
             Would you like to create a reward share transaction, sharing <strong>${this._percentageShare / 1e8}%</strong> of your minting rewards with <strong>${this.constructor.Base58.encode(this._recipient)}</strong>? 
             If yes, you will need to save the key below in order to mint. It can be supplied to any node in order to allow it to mint on your behalf.
             <div style="background:#eee; padding:8px; margin:8px 0; border-radius:2px;">

@@ -39,7 +39,7 @@ export default class ChatTransaction extends ChatBase {
 
     set isEncrypted(isEncrypted) {
         this._isEncrypted = new Uint8Array(1);
-        this._isEncrypted[0] = isEncrypted; // Set to true...
+        this._isEncrypted[0] = isEncrypted;
 
         if (isEncrypted === 1) {
             const convertedPrivateKey = ed2curve.convertSecretKey(this._keyPair.privateKey)
@@ -57,7 +57,7 @@ export default class ChatTransaction extends ChatBase {
 
     set isText(isText) {
         this._isText = new Uint8Array(1);
-        this._isText[0] = isText; // Set to true
+        this._isText[0] = isText;
     }
 
     get params() {

@@ -3,7 +3,6 @@ import { TX_TYPES, QORT_DECIMALS } from '../constants.js'
 import nacl from '../deps/nacl-fast.js'
 import Base58 from '../deps/Base58.js'
 import utils from '../deps/utils.js'
-// import { html } from 'lit-element'
 
 export default class TransactionBase {
     static get utils() {
@@ -72,7 +71,6 @@ export default class TransactionBase {
     }
     set type(type) {
         this.typeText = TX_TYPES[type]
-        // this._type = TX_TYPES[type];
         this._type = type
         this._typeBytes = this.constructor.utils.int32ToBytes(this._type)
     }
@@ -110,7 +108,7 @@ export default class TransactionBase {
 
     // render function but NOT lit element
     render(html) {
-        return html`Please implement a render method (html\`...\`) in order to display requested transaction info`
+        return html`render method to display requested transaction info`
     }
 
     validParams() {

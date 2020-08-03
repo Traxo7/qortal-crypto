@@ -20,6 +20,11 @@ inherits@^2.0.1:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
+jssha@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/jssha/-/jssha-3.1.1.tgz#760321a992df998754b7bcb0730bfb5565033d2e"
+  integrity sha512-Fon8jNpUbNQAIcZLosMPKxywu1d1it4BBBjVPgdG9tn3nanbunEAyQD0EVjotuq9VKCgivdQe4iwm9C9m3gHHg==
+
 lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"

@@ -117,6 +117,13 @@ export default class BitcoinHDWallet {
 
         this._tmasterPublicKey = ''
 
+        /**
+         * TESTNET Bitcoin Legacy Address (Derived from the master Public Key Hash) THIS IS TESTNET
+         */
+
+        this._tbitcoinLegacyAddress = ''
+
+
 
 
         /**
@@ -319,6 +326,24 @@ export default class BitcoinHDWallet {
         const publicKeySHA256 = new Sha256().process(new Uint8Array(this.publicKey)).finish().result
         const publicKeyHashHex = new RIPEMD160().update(Buffer.from(publicKeySHA256)).digest('hex')
         this.publicKeyHash = utils.hexToBytes(publicKeyHashHex)
+
+
+        /**
+         * Derive TESTNET Bitcoin Legacy Address
+         */
+
+        // Append Version Byte
+        const k = [0x6f].concat(...this.publicKeyHash)
+
+        // Derive Checksum
+        const _addressCheckSum = new Sha256().process(new Sha256().process(new Uint8Array(k)).finish().result).finish().result
+        const addressCheckSum = _addressCheckSum.slice(0, 4)
+
+        // Append CheckSum
+        const _tbitcoinLegacyAddress = k.concat(...addressCheckSum)
+
+        // Convert to Base58
+        this._tbitcoinLegacyAddress = Base58.encode(_tbitcoinLegacyAddress)
 
     }
 
@@ -831,7 +856,8 @@ export default class BitcoinHDWallet {
             derivedPublicChildKey: this.xPublicChildKey,
             derivedPrivateGrandChildKey: this.xPrivateGrandChildKey,
             derivedPublicGrandChildKey: this.xPublicGrandChildKey,
-            address: this.bitcoinLegacyAddress
+            address: this.bitcoinLegacyAddress,
+            _taddress: this._tbitcoinLegacyAddress
         }
 
         this.wallet = wallet

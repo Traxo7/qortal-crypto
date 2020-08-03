@@ -1,4 +1,5 @@
 import TradeBotCreateRequest from './transactions/trade-portal/tradebot/TradeBotCreateRequest.js';
+import TradeBotRespondRequest from './transactions/trade-portal/tradebot/TradeBotRespondRequest.js';
 import signTradeBotTransaction from './transactions/trade-portal/tradebot/signTradeBotTransaction.js'
 
 import { request } from './fetch-request'
@@ -9,6 +10,20 @@ export const tradeBotCreateRequest = (requestObject) => {
     const txn = new TradeBotCreateRequest().createTransaction(requestObject)
 
     return request('/crosschain/tradebot/create', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(txn)
+    })
+}
+
+// TradeBotRespondRequest
+export const tradeBotRespondRequest = (requestObject) => {
+    const txn = new TradeBotRespondRequest().createTransaction(requestObject)
+
+    return request('/crosschain/tradebot/respond', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

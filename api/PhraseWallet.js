@@ -7,6 +7,8 @@ import { Sha256, Sha512 } from 'asmcrypto.js'
 import nacl from './deps/nacl-fast.js'
 import utils from './deps/utils.js'
 
+import BitcoinHDWallet from './bitcoin/BitcoinHDWallet.js';
+
 import { generateSaveWalletData } from './storeWallet.js'
 
 import publicKeyToAddress from './wallet/publicKeyToAddress.js'
@@ -92,8 +94,12 @@ export default class PhraseWallet {
         const address = publicKeyToAddress(addrKeyPair.publicKey)
         const qoraAddress = publicKeyToAddress(addrKeyPair.publicKey, true)
 
+        // Create Bitcoin HD Wallet 
+        const btcWallet = new BitcoinHDWallet().createWallet(addrSeed)
+
         this._addresses[nonce] = {
             address,
+            btcWallet,
             qoraAddress,
             keyPair: {
                 publicKey: addrKeyPair.publicKey,

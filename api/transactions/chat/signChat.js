@@ -1,5 +1,4 @@
 import nacl from '../../deps/nacl-fast.js'
-import Base58 from '../../deps/Base58.js'
 import utils from '../../deps/utils.js'
 
 

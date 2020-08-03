@@ -7,6 +7,7 @@ export async function request(url, options) {
     options = options || {}
     const body = options.body
     const method = options.method || 'GET'
+    const headers = options.headers || {}
 
     await waitForConfig()
 
@@ -14,6 +15,7 @@ export async function request(url, options) {
     const node = n.protocol + '://' + n.domain + ':' + n.port
     return fetch(node + url, {
         method,
+        headers,
         body // If it's undefined that's fine right?
     }).then(async response => {
         try {

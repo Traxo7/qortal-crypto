@@ -21,7 +21,7 @@ export default class TradeBotCreateRequest {
 
         this.tradeTimeout(txnReq.tradeTimeout)
 
-        this.receiveAddress(txnReq.receiveAddress)
+        this.receivingAddress(txnReq.receivingAddress)
 
         return this.txnRequest()
     }
@@ -52,9 +52,9 @@ export default class TradeBotCreateRequest {
         this._tradeTimeout = tradeTimeout
     }
 
-    receiveAddress(receiveAddress) {
+    receivingAddress(receivingAddress) {
 
-        this._receiveAddress = receiveAddress
+        this._receivingAddress = receivingAddress
     }
 
     txnRequest() {
@@ -65,7 +65,7 @@ export default class TradeBotCreateRequest {
             fundingQortAmount: this._fundingQortAmount,
             bitcoinAmount: this._bitcoinAmount,
             tradeTimeout: this._tradeTimeout,
-            receiveAddress: this._receiveAddress
+            receivingAddress: this._receivingAddress
         }
     }
 }

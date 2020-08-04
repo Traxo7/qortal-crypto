@@ -1,4 +1,4 @@
-import RIPEMD160 from 'ripemd160'
+import RIPEMD160 from '../deps/ripemd160.js'
 import BROKEN_RIPEMD160 from '../deps/broken-ripemd160.js'
 import { Sha256 } from 'asmcrypto.js'
 
@@ -18,9 +18,9 @@ const repeatSHA256 = (passphrase, hashes) => {
 
 const publicKeyToAddress = (publicKey, qora = false) => {
     const publicKeySha256 = new Sha256().process(publicKey).finish().result
-    const publicKeyHashHex = qora ? new BROKEN_RIPEMD160().digest(publicKeySha256) : new RIPEMD160().update(Buffer.from(publicKeySha256)).digest('hex')
+    const _publicKeyHash = qora ? new BROKEN_RIPEMD160().digest(publicKeySha256) : new RIPEMD160().update(Buffer.from(publicKeySha256)).digest('hex')
 
-    const publicKeyHash = qora ? publicKeyHashHex : utils.hexToBytes(publicKeyHashHex)
+    const publicKeyHash = qora ? _publicKeyHash : _publicKeyHash
     let address = new Uint8Array()
 
     address = utils.appendBuffer(address, [ADDRESS_VERSION])

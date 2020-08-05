@@ -3,10 +3,10 @@ import nacl from '../../../deps/nacl-fast.js'
 import utils from '../../../deps/utils.js'
 
 
-const signTradeBotTransaction = (unsignedTxn, keyPair) => {
+const signTradeBotTransaction = (unsignedTxn, keyPair, isCancelTrade) => {
 
     if (!unsignedTxn) {
-        throw new Error('Chat Bytes not defined')
+        throw new Error('Unsigned Transaction Bytes not defined')
     }
 
     if (!keyPair) {
@@ -15,11 +15,32 @@ const signTradeBotTransaction = (unsignedTxn, keyPair) => {
 
     const txnBuffer = Base58.decode(unsignedTxn)
 
-    const signature = nacl.sign.detached(txnBuffer, keyPair.privateKey)
+    if (keyPair.privateKey.length === undefined) {
+        let privateKey
 
-    const signedBytes = utils.appendBuffer(txnBuffer, signature)
+        const _rawKey = Object.keys(keyPair.privateKey).map(function (key) { return keyPair.privateKey[key]; });
+        const rawKey = new Uint8Array(_rawKey)
 
-    return signedBytes
+        if (isCancelTrade === true) {
+            const keys = nacl.sign.keyPair.fromSeed(rawKey)
+            privateKey = keys.secretKey
+        } else {
+            privateKey = rawKey
+        }
+
+        const signature = nacl.sign.detached(txnBuffer, privateKey)
+
+        const signedBytes = utils.appendBuffer(txnBuffer, signature)
+
+        return signedBytes
+    } else {
+
+        const signature = nacl.sign.detached(txnBuffer, keyPair.privateKey)
+
+        const signedBytes = utils.appendBuffer(txnBuffer, signature)
+
+        return signedBytes
+    }
 }
 
 export default signTradeBotTransaction

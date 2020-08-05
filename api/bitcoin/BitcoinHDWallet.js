@@ -9,7 +9,7 @@
 import Base58 from '../deps/Base58.js'
 import { Sha256, Sha512 } from 'asmcrypto.js'
 import jsSHA from "jssha";
-import RIPEMD160 from 'ripemd160'
+import RIPEMD160 from '../deps/ripemd160.js'
 import utils from '../deps/utils.js'
 import { EllipticCurve, BigInteger } from './ecbn.js';
 
@@ -117,12 +117,6 @@ export default class BitcoinHDWallet {
 
         this._tmasterPublicKey = ''
 
-        /**
-         * TESTNET Bitcoin Legacy Address (Derived from the master Public Key Hash) THIS IS TESTNET
-         */
-
-        this._tbitcoinLegacyAddress = ''
-
 
 
 
@@ -215,6 +209,12 @@ export default class BitcoinHDWallet {
          */
 
         this.bitcoinLegacyAddress = ''
+
+        /**
+         * TESTNET Bitcoin Legacy Address (Derived from the Grand Child Public Key Hash) - THIS IS TESTNET
+         */
+
+        this._tbitcoinLegacyAddress = ''
 
 
         /**
@@ -324,27 +324,8 @@ export default class BitcoinHDWallet {
 
         // PublicKey Hash 
         const publicKeySHA256 = new Sha256().process(new Uint8Array(this.publicKey)).finish().result
-        const publicKeyHashHex = new RIPEMD160().update(Buffer.from(publicKeySHA256)).digest('hex')
-        this.publicKeyHash = utils.hexToBytes(publicKeyHashHex)
-
-
-        /**
-         * Derive TESTNET Bitcoin Legacy Address
-         */
-
-        // Append Version Byte
-        const k = [0x6f].concat(...this.publicKeyHash)
-
-        // Derive Checksum
-        const _addressCheckSum = new Sha256().process(new Sha256().process(new Uint8Array(k)).finish().result).finish().result
-        const addressCheckSum = _addressCheckSum.slice(0, 4)
-
-        // Append CheckSum
-        const _tbitcoinLegacyAddress = k.concat(...addressCheckSum)
-
-        // Convert to Base58
-        this._tbitcoinLegacyAddress = Base58.encode(_tbitcoinLegacyAddress)
-
+        const _publicKeyHash = new RIPEMD160().update(Buffer.from(publicKeySHA256)).digest('hex')
+        this.publicKeyHash = _publicKeyHash
     }
 
     generateMainnetMasterPrivateKey() {
@@ -534,8 +515,8 @@ export default class BitcoinHDWallet {
 
             // PublicKey Hash 
             const childPublicKeySHA256 = new Sha256().process(new Uint8Array(this.childPublicKey)).finish().result
-            const childPublicKeyHashHex = new RIPEMD160().update(Buffer.from(childPublicKeySHA256)).digest('hex')
-            this.childPublicKeyHash = utils.hexToBytes(childPublicKeyHashHex)
+            const _childPublicKeyHash = new RIPEMD160().update(Buffer.from(childPublicKeySHA256)).digest('hex')
+            this.childPublicKeyHash = _childPublicKeyHash
 
 
             // Call deriveExtendedPublicChildKey // WIll be hardcoding the values...
@@ -689,8 +670,8 @@ export default class BitcoinHDWallet {
 
             // PublicKey Hash 
             const grandChildPublicKeySHA256 = new Sha256().process(new Uint8Array(this.grandChildPublicKey)).finish().result
-            const grandChildPublicKeyHashHex = new RIPEMD160().update(Buffer.from(grandChildPublicKeySHA256)).digest('hex')
-            this.grandChildPublicKeyHash = utils.hexToBytes(grandChildPublicKeyHashHex)
+            const _grandChildPublicKeyHash = new RIPEMD160().update(Buffer.from(grandChildPublicKeySHA256)).digest('hex')
+            this.grandChildPublicKeyHash = _grandChildPublicKeyHash
 
 
             // Call deriveExtendedPublicChildKey // WIll be hardcoding the values...
@@ -712,6 +693,24 @@ export default class BitcoinHDWallet {
 
             // Convert to Base58
             this.bitcoinLegacyAddress = Base58.encode(_bitcoinLegacyAddress)
+
+
+            /**
+             * Derive TESTNET Bitcoin Legacy Address
+             */
+
+            // Append Version Byte
+            const tK = [0x6f].concat(...this.grandChildPublicKeyHash)
+
+            // Derive Checksum
+            const _tAddressCheckSum = new Sha256().process(new Sha256().process(new Uint8Array(tK)).finish().result).finish().result
+            const tAddressCheckSum = _tAddressCheckSum.slice(0, 4)
+
+            // Append CheckSum
+            const _tbitcoinLegacyAddress = tK.concat(...tAddressCheckSum)
+
+            // Convert to Base58
+            this._tbitcoinLegacyAddress = Base58.encode(_tbitcoinLegacyAddress)
         }
 
         const derivePrivateGrandChildKey = (cI, i) => {
@@ -847,15 +846,17 @@ export default class BitcoinHDWallet {
 
     returnWallet() {
 
+        // Will be limiting the exported Wallet Object to just the Master keys and Legacy Addresses
+
         const wallet = {
             derivedMasterPrivateKey: this.masterPrivateKey,
             derivedMasterPublicKey: this.masterPublicKey,
             _tDerivedMasterPrivateKey: this._tMasterPrivateKey,
             _tDerivedmasterPublicKey: this._tmasterPublicKey,
-            derivedPrivateChildKey: this.xPrivateChildKey,
-            derivedPublicChildKey: this.xPublicChildKey,
-            derivedPrivateGrandChildKey: this.xPrivateGrandChildKey,
-            derivedPublicGrandChildKey: this.xPublicGrandChildKey,
+            // derivedPrivateChildKey: this.xPrivateChildKey,
+            // derivedPublicChildKey: this.xPublicChildKey,
+            // derivedPrivateGrandChildKey: this.xPrivateGrandChildKey,
+            // derivedPublicGrandChildKey: this.xPublicGrandChildKey,
             address: this.bitcoinLegacyAddress,
             _taddress: this._tbitcoinLegacyAddress
         }

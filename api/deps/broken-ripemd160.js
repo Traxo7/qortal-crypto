@@ -10,8 +10,8 @@ const RIPEMD160 = (function () {
         this.MDbuf[2] = -1732584194;
         this.MDbuf[3] = 271733878;
         this.MDbuf[4] = -1009589776;
-		this.working = new Int32Array(16);
-		
+        this.working = new Int32Array(16);
+
         this.working_ptr = 0;
         this.msglen = 0;
     }
@@ -162,7 +162,7 @@ const RIPEMD160 = (function () {
     RIPEMD160.prototype.digestBin = function () {
         this.MDfinish(this.working, this.msglen, 0);
         //var res = new Int8Array();
-		var res = [];
+        var res = [];
         for (var i = 0; i < 20; i++) {
             res[i] = ((this.MDbuf[i >> 2] >>> ((i & 3) << 3)) & 255);
         }

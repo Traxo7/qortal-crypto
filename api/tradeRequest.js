@@ -1,6 +1,10 @@
+// Trade Bot
 import TradeBotCreateRequest from './transactions/trade-portal/tradebot/TradeBotCreateRequest.js';
 import TradeBotRespondRequest from './transactions/trade-portal/tradebot/TradeBotRespondRequest.js';
 import signTradeBotTransaction from './transactions/trade-portal/tradebot/signTradeBotTransaction.js'
+
+// Trade Offer
+import DeleteTradeOffer from './transactions/trade-portal/tradeoffer/DeleteTradeOffer.js';
 
 import { request } from './fetch-request'
 
@@ -35,6 +39,20 @@ export const tradeBotRespondRequest = (requestObject) => {
 
 
 // Sign Trade Transactions
-export const signTradeBotTxn = (unsignedTxn, keyPair) => {
-    return signTradeBotTransaction(unsignedTxn, keyPair)
+export const signTradeBotTxn = (unsignedTxn, keyPair, isCancelTrade) => {
+    return signTradeBotTransaction(unsignedTxn, keyPair, isCancelTrade)
+}
+
+// Delete Trade Offer
+export const deleteTradeOffer = (requestObject) => {
+    const txn = new DeleteTradeOffer().createTransaction(requestObject)
+
+    return request('/crosschain/tradeoffer', {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(txn)
+    })
 }

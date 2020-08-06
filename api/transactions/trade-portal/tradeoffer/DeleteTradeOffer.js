@@ -11,11 +11,17 @@ export default class DeleteTradeOffer {
 
     createTransaction(txnReq) {
 
+        this.creatorPublicKey(txnReq.creatorPublicKey)
+
         this.atAddress(txnReq.atAddress)
 
-        this.tradePublicKey(txnReq.tradeKeyPair.publicKey)
-
         return this.txnRequest()
+    }
+
+    creatorPublicKey(creatorPublicKey) {
+
+        this._creatorPublicKey = creatorPublicKey
+
     }
 
     atAddress(atAddress) {
@@ -23,15 +29,11 @@ export default class DeleteTradeOffer {
         this._atAddress = atAddress
     }
 
-    tradePublicKey(tradePublicKey) {
-        this._tradePublicKey = tradePublicKey
-    }
-
     txnRequest() {
 
         return {
-            atAddress: this._atAddress,
-            tradePublicKey: this._tradePublicKey
+            creatorPublicKey: this._creatorPublicKey,
+            atAddress: this._atAddress
         }
     }
 }

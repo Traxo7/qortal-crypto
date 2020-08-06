@@ -95,7 +95,8 @@ export default class PhraseWallet {
         const qoraAddress = publicKeyToAddress(addrKeyPair.publicKey, true)
 
         // Create Bitcoin HD Wallet 
-        const btcWallet = new BitcoinHDWallet().createWallet(addrSeed)
+        const btcSeed = [...addrSeed]
+        const btcWallet = new BitcoinHDWallet().createWallet(new Uint8Array(btcSeed))
 
         this._addresses[nonce] = {
             address,

@@ -39,8 +39,8 @@ export const tradeBotRespondRequest = (requestObject) => {
 
 
 // Sign Trade Transactions
-export const signTradeBotTxn = (unsignedTxn, keyPair, isCancelTrade) => {
-    return signTradeBotTransaction(unsignedTxn, keyPair, isCancelTrade)
+export const signTradeBotTxn = (unsignedTxn, keyPair) => {
+    return signTradeBotTransaction(unsignedTxn, keyPair)
 }
 
 // Delete Trade Offer

@@ -3,7 +3,7 @@ import nacl from '../../../deps/nacl-fast.js'
 import utils from '../../../deps/utils.js'
 
 
-const signTradeBotTransaction = (unsignedTxn, keyPair, isCancelTrade) => {
+const signTradeBotTransaction = (unsignedTxn, keyPair) => {
 
     if (!unsignedTxn) {
         throw new Error('Unsigned Transaction Bytes not defined')
@@ -16,17 +16,9 @@ const signTradeBotTransaction = (unsignedTxn, keyPair, isCancelTrade) => {
     const txnBuffer = Base58.decode(unsignedTxn)
 
     if (keyPair.privateKey.length === undefined) {
-        let privateKey
 
-        const _rawKey = Object.keys(keyPair.privateKey).map(function (key) { return keyPair.privateKey[key]; });
-        const rawKey = new Uint8Array(_rawKey)
-
-        if (isCancelTrade === true) {
-            const keys = nacl.sign.keyPair.fromSeed(rawKey)
-            privateKey = keys.secretKey
-        } else {
-            privateKey = rawKey
-        }
+        const _privateKey = Object.keys(keyPair.privateKey).map(function (key) { return keyPair.privateKey[key]; });
+        const privateKey = new Uint8Array(_privateKey)
 
         const signature = nacl.sign.detached(txnBuffer, privateKey)
 

@@ -56,3 +56,16 @@ export const deleteTradeOffer = (requestObject) => {
         body: JSON.stringify(txn)
     })
 }
+
+// Send BTC 
+export const sendBtc = (requestObject) => {
+
+    return request('/crosschain/btc/send', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestObject)
+    })
+}

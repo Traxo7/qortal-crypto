@@ -1,6 +1,6 @@
 
 /**!!!
- * A Bitcoin Hierarchical Deterministic (HD) Wallet JS Implementation
+ * A Litecoin Hierarchical Deterministic (HD) Wallet JS Implementation
  * 
  * Copyright (c) 2020  LOTW (^_^)
  */
@@ -14,7 +14,7 @@ import utils from '../deps/utils.js'
 import { EllipticCurve, BigInteger } from './ecbn.js';
 
 
-export default class BitcoinHDWallet {
+export default class LitecoinHDWallet {
 
     constructor() {
 
@@ -32,7 +32,7 @@ export default class BitcoinHDWallet {
             mainnet: {
                 private: 0x0488ADE4,
                 public: 0x0488B21E,
-                prefix: 0
+                prefix: 0x30
             },
             testnet: {
                 private: 0x04358394,
@@ -207,16 +207,16 @@ export default class BitcoinHDWallet {
         this.xPublicGrandChildKey = ''
 
         /**
-         * Bitcoin Legacy Address - Derived from the Grand Child Public Key Hash
+         * Litecoin Legacy Address - Derived from the Grand Child Public Key Hash
          */
 
-        this.bitcoinLegacyAddress = ''
+        this.litecoinLegacyAddress = ''
 
         /**
-         * TESTNET Bitcoin Legacy Address (Derived from the Grand Child Public Key Hash) - THIS IS TESTNET
+         * TESTNET Litecoin Legacy Address (Derived from the Grand Child Public Key Hash) - THIS IS TESTNET
          */
 
-        this._tbitcoinLegacyAddress = ''
+        this._tlitecoinLegacyAddress = ''
 
 
         /**
@@ -269,7 +269,9 @@ export default class BitcoinHDWallet {
 
     generateSeedHash(seed) {
 
-        const _reverseSeedHash = new Sha256().process(seed.reverse()).finish().result;
+        const ltc = utils.stringtoUTF8Array('LTC');
+        const buffer = utils.appendBuffer(seed.reverse(), ltc);
+        const _reverseSeedHash = new Sha256().process(buffer).finish().result;
         this.seedHash = new Sha512().process(utils.appendBuffer(seed, _reverseSeedHash)).finish().result;
     }
 
@@ -680,10 +682,10 @@ export default class BitcoinHDWallet {
             deriveExtendedPublicGrandChildKey(2, 0)
 
             /**
-             * Derive Bitcoin Legacy Address
+             * Derive Litecoin Legacy Address
              */
 
-            // Append Version Byte
+            // Append Address Prefix
             const k = [this.versionBytes.mainnet.prefix].concat(...this.grandChildPublicKeyHash)
 
             // Derive Checksum
@@ -691,14 +693,14 @@ export default class BitcoinHDWallet {
             const addressCheckSum = _addressCheckSum.slice(0, 4)
 
             // Append CheckSum
-            const _bitcoinLegacyAddress = k.concat(...addressCheckSum)
+            const _litecoinLegacyAddress = k.concat(...addressCheckSum)
 
             // Convert to Base58
-            this.bitcoinLegacyAddress = Base58.encode(_bitcoinLegacyAddress)
+            this.litecoinLegacyAddress = Base58.encode(_litecoinLegacyAddress)
 
 
             /**
-             * Derive TESTNET Bitcoin Legacy Address
+             * Derive TESTNET Litecoin Legacy Address
              */
 
             // Append Version Byte
@@ -709,10 +711,10 @@ export default class BitcoinHDWallet {
             const tAddressCheckSum = _tAddressCheckSum.slice(0, 4)
 
             // Append CheckSum
-            const _tbitcoinLegacyAddress = tK.concat(...tAddressCheckSum)
+            const _tlitecoinLegacyAddress = tK.concat(...tAddressCheckSum)
 
             // Convert to Base58
-            this._tbitcoinLegacyAddress = Base58.encode(_tbitcoinLegacyAddress)
+            this._tlitecoinLegacyAddress = Base58.encode(_tlitecoinLegacyAddress)
         }
 
         const derivePrivateGrandChildKey = (cI, i) => {
@@ -859,8 +861,8 @@ export default class BitcoinHDWallet {
             // derivedPublicChildKey: this.xPublicChildKey,
             // derivedPrivateGrandChildKey: this.xPrivateGrandChildKey,
             // derivedPublicGrandChildKey: this.xPublicGrandChildKey,
-            address: this.bitcoinLegacyAddress,
-            _taddress: this._tbitcoinLegacyAddress
+            address: this.litecoinLegacyAddress,
+            _taddress: this._tlitecoinLegacyAddress
         }
 
         this.wallet = wallet

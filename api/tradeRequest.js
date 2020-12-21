@@ -16,7 +16,7 @@ export const tradeBotCreateRequest = (requestObject) => {
     return request('/crosschain/tradebot/create', {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
+            'Accept': 'text/plain',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(txn)

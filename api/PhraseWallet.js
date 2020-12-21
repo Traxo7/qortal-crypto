@@ -8,6 +8,7 @@ import nacl from './deps/nacl-fast.js'
 import utils from './deps/utils.js'
 
 import BitcoinHDWallet from './bitcoin/BitcoinHDWallet.js';
+import LitecoinHDWallet from './bitcoin/LitecoinHDWallet.js';
 
 import { generateSaveWalletData } from './storeWallet.js'
 
@@ -89,18 +90,23 @@ export default class PhraseWallet {
             addrSeed = this._genAddressSeed(addrSeed).slice(0, 32)
         }
 
-        const addrKeyPair = nacl.sign.keyPair.fromSeed(new Uint8Array(addrSeed))
+        const addrKeyPair = nacl.sign.keyPair.fromSeed(new Uint8Array(addrSeed));
 
-        const address = publicKeyToAddress(addrKeyPair.publicKey)
-        const qoraAddress = publicKeyToAddress(addrKeyPair.publicKey, true)
+        const address = publicKeyToAddress(addrKeyPair.publicKey);
+        const qoraAddress = publicKeyToAddress(addrKeyPair.publicKey, true);
 
         // Create Bitcoin HD Wallet 
-        const btcSeed = [...addrSeed]
-        const btcWallet = new BitcoinHDWallet().createWallet(new Uint8Array(btcSeed))
+        const btcSeed = [...addrSeed];
+        const btcWallet = new BitcoinHDWallet().createWallet(new Uint8Array(btcSeed));
+
+        // Create Litecoin HD Wallet 
+        const ltcSeed = [...addrSeed];
+        const ltcWallet = new LitecoinHDWallet().createWallet(new Uint8Array(ltcSeed));
 
         this._addresses[nonce] = {
             address,
             btcWallet,
+            ltcWallet,
             qoraAddress,
             keyPair: {
                 publicKey: addrKeyPair.publicKey,

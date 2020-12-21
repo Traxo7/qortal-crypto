@@ -11,50 +11,57 @@ export default class TradeBotCreateRequest {
 
     createTransaction(txnReq) {
 
-        this.creatorPublicKey(txnReq.creatorPublicKey)
+        this.creatorPublicKey(txnReq.creatorPublicKey);
 
-        this.qortAmount(txnReq.qortAmount)
+        this.qortAmount(txnReq.qortAmount);
 
-        this.fundingQortAmount(txnReq.fundingQortAmount)
+        this.fundingQortAmount(txnReq.fundingQortAmount);
 
-        this.bitcoinAmount(txnReq.bitcoinAmount)
+        this.foreignBlockchain(txnReq.foreignBlockchain);
 
-        this.tradeTimeout(txnReq.tradeTimeout)
+        this.foreignAmount(txnReq.foreignAmount);
 
-        this.receivingAddress(txnReq.receivingAddress)
+        this.tradeTimeout(txnReq.tradeTimeout);
 
-        return this.txnRequest()
+        this.receivingAddress(txnReq.receivingAddress);
+
+        return this.txnRequest();
     }
 
     creatorPublicKey(creatorPublicKey) {
 
-        this._creatorPublicKey = creatorPublicKey
+        this._creatorPublicKey = creatorPublicKey;
 
     }
 
     qortAmount(qortAmount) {
-        this._qortAmount = qortAmount
+        this._qortAmount = qortAmount;
     }
 
 
     fundingQortAmount(fundingQortAmount) {
 
-        this._fundingQortAmount = fundingQortAmount
+        this._fundingQortAmount = fundingQortAmount;
     }
 
-    bitcoinAmount(bitcoinAmount) {
+    foreignBlockchain(foreignBlockchain) {
 
-        this._bitcoinAmount = bitcoinAmount
+        this._foreignBlockchain = foreignBlockchain;
+    }
+
+    foreignAmount(foreignAmount) {
+
+        this._foreignAmount = foreignAmount;
     }
 
     tradeTimeout(tradeTimeout) {
 
-        this._tradeTimeout = tradeTimeout
+        this._tradeTimeout = tradeTimeout;
     }
 
     receivingAddress(receivingAddress) {
 
-        this._receivingAddress = receivingAddress
+        this._receivingAddress = receivingAddress;
     }
 
     txnRequest() {
@@ -63,7 +70,8 @@ export default class TradeBotCreateRequest {
             creatorPublicKey: this._creatorPublicKey,
             qortAmount: this._qortAmount,
             fundingQortAmount: this._fundingQortAmount,
-            bitcoinAmount: this._bitcoinAmount,
+            foreignBlockchain: this._foreignBlockchain,
+            foreignAmount: this._foreignAmount,
             tradeTimeout: this._tradeTimeout,
             receivingAddress: this._receivingAddress
         }

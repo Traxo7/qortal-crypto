@@ -69,3 +69,16 @@ export const sendBtc = (requestObject) => {
         body: JSON.stringify(requestObject)
     })
 }
+
+// Send BTC 
+export const sendLtc = (requestObject) => {
+
+    return request('/crosschain/ltc/send', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestObject)
+    })
+}

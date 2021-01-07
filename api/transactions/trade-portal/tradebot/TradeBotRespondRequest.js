@@ -13,7 +13,7 @@ export default class TradeBotRespondRequest {
 
         this.atAddress(txnReq.atAddress)
 
-        this.xprv58(txnReq.xprv58)
+        this.foreignKey(txnReq.foreignKey)
 
         this.receivingAddress(txnReq.receivingAddress)
 
@@ -25,8 +25,8 @@ export default class TradeBotRespondRequest {
         this._atAddress = atAddress
     }
 
-    xprv58(xprv58) {
-        this._xprv58 = xprv58
+    foreignKey(foreignKey) {
+        this._foreignKey = foreignKey
     }
 
     receivingAddress(receivingAddress) {
@@ -38,7 +38,7 @@ export default class TradeBotRespondRequest {
 
         return {
             atAddress: this._atAddress,
-            xprv58: this._xprv58,
+            foreignKey: this._foreignKey,
             receivingAddress: this._receivingAddress
         }
     }

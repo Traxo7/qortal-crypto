@@ -16,7 +16,7 @@ export const tradeBotCreateRequest = (requestObject) => {
     return request('/crosschain/tradebot/create', {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
+            'Accept': 'text/plain',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(txn)
@@ -61,6 +61,19 @@ export const deleteTradeOffer = (requestObject) => {
 export const sendBtc = (requestObject) => {
 
     return request('/crosschain/btc/send', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestObject)
+    })
+}
+
+// Send BTC 
+export const sendLtc = (requestObject) => {
+
+    return request('/crosschain/ltc/send', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

@@ -37,7 +37,7 @@ export default class RemoveRewardShareTransaction extends TransactionBase {
 
 
     set percentageShare(share) {
-        this._percentageShare = share * 1e8
+        this._percentageShare = share * 100
         this._percentageShareBytes = this.constructor.utils.int64ToBytes(this._percentageShare)
     }
 

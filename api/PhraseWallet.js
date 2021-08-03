@@ -140,7 +140,7 @@ export default class PhraseWallet {
                 public: 0x043587CF,
                 prefix: 0x71
             }
-        }).createWallet(new Uint8Array(dogeSeed), true, 3);
+        }).createWallet(new Uint8Array(dogeSeed), false, 'DOGE');
 
         this._addresses[nonce] = {
             address,

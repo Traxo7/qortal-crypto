@@ -14,6 +14,7 @@ import DogecoinHDWallet from './bitcoin/DogecoinHDWallet.js';
 import { generateSaveWalletData } from './storeWallet.js'
 
 import publicKeyToAddress from './wallet/publicKeyToAddress.js'
+import AltcoinHDWallet from "./bitcoin/AltcoinHDWallet";
 
 export default class PhraseWallet {
     constructor(seed, walletVersion) {
@@ -98,15 +99,48 @@ export default class PhraseWallet {
 
         // Create Bitcoin HD Wallet
         const btcSeed = [...addrSeed];
-        const btcWallet = new BitcoinHDWallet().createWallet(new Uint8Array(btcSeed));
+        const btcWallet = new AltcoinHDWallet({
+            mainnet: {
+                private: 0x0488ADE4,
+                public: 0x0488B21E,
+                prefix: 0
+            },
+            testnet: {
+                private: 0x04358394,
+                public: 0x043587CF,
+                prefix: 0x6F
+            }
+        }).createWallet(new Uint8Array(btcSeed), false);
 
         // Create Litecoin HD Wallet
         const ltcSeed = [...addrSeed];
-        const ltcWallet = new LitecoinHDWallet().createWallet(new Uint8Array(ltcSeed));
+        const ltcWallet = new AltcoinHDWallet({
+            mainnet: {
+                private: 0x0488ADE4,
+                public: 0x0488B21E,
+                prefix: 0x30
+            },
+            testnet: {
+                private: 0x04358394,
+                public: 0x043587CF,
+                prefix: 0x6F
+            }
+        }).createWallet(new Uint8Array(ltcSeed), false, 'ltc');
 
         // Create Dogecoin HD Wallet
         const dogeSeed = [...addrSeed];
-        const dogeWallet = new DogecoinHDWallet().createWallet(new Uint8Array(dogeSeed));
+        const dogeWallet = new AltcoinHDWallet({
+            mainnet: {
+                private: 0x02FAC398,
+                public: 0x02FACAFD,
+                prefix: 0x1E
+            },
+            testnet: {
+                private: 0x04358394,
+                public: 0x043587CF,
+                prefix: 0x71
+            }
+        }).createWallet(new Uint8Array(dogeSeed), true, 3);
 
         this._addresses[nonce] = {
             address,

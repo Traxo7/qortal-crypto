@@ -1,9 +1,7 @@
 'use strict';
 import TransactionBase from './TransactionBase.js'
-// import { QORT_DECIMALS } from '../constants.js'
+import { QORT_DECIMALS } from '../constants.js'
 import Base58 from '../deps/Base58.js'
-// import { store } from '../../store.js'
-import { store } from '../../api.js'
 
 export default class PaymentTransaction extends TransactionBase {
     constructor() {
@@ -12,7 +10,7 @@ export default class PaymentTransaction extends TransactionBase {
         this.tests.push(
             () => {
                 if (!(this._amount >= 0)) {
-                    return 'Invalid amount ' + this._amount / store.getState().config.coin.decimals
+                    return 'Invalid amount ' + this._amount / QORT_DECIMALS
                 }
                 return true
             },
@@ -29,9 +27,7 @@ export default class PaymentTransaction extends TransactionBase {
         this._recipient = recipient instanceof Uint8Array ? recipient : this.constructor.Base58.decode(recipient)
     }
     set amount(amount) {
-        // console.log('=====DECIMALS ', store.getState().config.coin.decimals)
-        // console.log("IINIT AMOUNT: ", amount);
-        this._amount = amount * store.getState().config.coin.decimals
+        this._amount = amount * QORT_DECIMALS
         this._amountBytes = this.constructor.utils.int64ToBytes(this._amount)
     }
     get params() {
@@ -42,23 +38,6 @@ export default class PaymentTransaction extends TransactionBase {
             this._feeBytes
         )
         return params
-    }
-
-    render(html) {
-        const conf = store.getState().config
-        // console.log(this)
-        return html`
-            <table>
-                <tr>
-                    <th>To</th>
-                    <td>${Base58.encode(this._recipient)}</td>
-                </tr>
-                <tr>
-                    <th>Amount</th>
-                    <td>${this._amount / conf.coin.decimals} ${conf.coin.symbol}</td>
-                </tr>
-            </table>
-        `
     }
 }
 //

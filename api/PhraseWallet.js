@@ -7,10 +7,6 @@ import { Sha256, Sha512 } from 'asmcrypto.js'
 import nacl from './deps/nacl-fast.js'
 import utils from './deps/utils.js'
 
-import BitcoinHDWallet from './bitcoin/BitcoinHDWallet.js';
-import LitecoinHDWallet from './bitcoin/LitecoinHDWallet.js';
-import DogecoinHDWallet from './bitcoin/DogecoinHDWallet.js';
-
 import { generateSaveWalletData } from './storeWallet.js'
 
 import publicKeyToAddress from './wallet/publicKeyToAddress.js'

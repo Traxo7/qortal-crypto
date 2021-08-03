@@ -1,4 +1,14 @@
+### Installation
+
+`yarn add qortal-ui-crypto`
+
+### Usage
+`import Qortal from 'qortal-ui-crypto'`
+
+<hr>
+
 Since `kdf` function was reworked (not using default store workers anymore), we need to use `worker-plugin` package in our webpack project.
+
 
 `yarn add worker-plugin`
 

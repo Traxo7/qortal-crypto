@@ -215,10 +215,10 @@ export default class AltcoinHDWallet {
   createWallet(seed, isBIP44, indicator = null) {
 
     // Set Seeed
-    this.setSeed(seed, isBIP44, indicator)
+    this.setSeed(seed)
 
     // Generate Seed Hash
-    this.generateSeedHash(this.seed)
+    this.generateSeedHash(this.seed, isBIP44, indicator)
 
     // Generate Private Key
     this.generatePrivateKey(this.seedHash)

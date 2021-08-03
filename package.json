@@ -1,7 +1,7 @@
 {
   "name": "qortal-ui-crypto",
   "version": "2.1.0",
-  "main": "api.js",
+  "main": "src/index.js",
   "repository": "https://github.com/Traxo7/qortal-ui-crypto.git",
   "author": "QORTAL <admin@qortal.org>",
   "license": "MIT",

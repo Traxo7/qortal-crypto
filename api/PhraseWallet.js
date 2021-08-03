@@ -125,7 +125,7 @@ export default class PhraseWallet {
                 public: 0x043587CF,
                 prefix: 0x6F
             }
-        }).createWallet(new Uint8Array(ltcSeed), false, 'ltc');
+        }).createWallet(new Uint8Array(ltcSeed), false, 'LTC');
 
         // Create Dogecoin HD Wallet
         const dogeSeed = [...addrSeed];

@@ -5,6 +5,7 @@ import { generateSaveWalletData } from '../api/storeWallet'
 import { signTransaction } from '../api/signTransaction'
 import { transactionTypes } from '../api/transactions/transactions'
 import { getMintingKey } from '../api/getMintingKey'
+import { base58PublicKeyToAddress } from '../api/wallet/base58PublicKeyToAddress'
 
 const Qortal = {
   PhraseWallet,
@@ -14,5 +15,6 @@ const Qortal = {
   signTransaction,
   getMintingKey,
   transactionTypes,
+  base58PublicKeyToAddress,
 }
 export default Qortal

@@ -7,6 +7,12 @@ import { transactionTypes } from '../api/transactions/transactions'
 import { getMintingKey } from '../api/getMintingKey'
 import { base58PublicKeyToAddress } from '../api/wallet/base58PublicKeyToAddress'
 
+import signTradeBotTransaction from '../api/transactions/trade-portal/tradebot/signTradeBotTransaction'
+
+const tradeBot = {
+  signTradeBotTransaction
+}
+
 const Qortal = {
   PhraseWallet,
   decryptWallet,
@@ -16,5 +22,6 @@ const Qortal = {
   getMintingKey,
   transactionTypes,
   base58PublicKeyToAddress,
+  tradeBot,
 }
 export default Qortal

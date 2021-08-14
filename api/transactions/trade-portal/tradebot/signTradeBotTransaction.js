@@ -24,14 +24,14 @@ const signTradeBotTransaction = (unsignedTxn, keyPair) => {
 
         const signedBytes = utils.appendBuffer(txnBuffer, signature)
 
-        return signedBytes
+        return Base58.encode(signedBytes)
     } else {
 
         const signature = nacl.sign.detached(txnBuffer, keyPair.privateKey)
 
         const signedBytes = utils.appendBuffer(txnBuffer, signature)
 
-        return signedBytes
+        return Base58.encode(signedBytes)
     }
 }
 

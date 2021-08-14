@@ -1,6 +1,8 @@
 import PaymentTransaction from './PaymentTransaction.js'
 import MessageTransaction from './MessageTransaction.js'
 import RegisterNameTransaction from './names/RegisterNameTransaction.js'
+import SellNameTransaction from './names/SellNameTransaction.js'
+import CancelSellNameTransaction from './names/CancelSellNameTransaction.js'
 import ChatTransaction from './chat/ChatTransaction.js'
 import GroupChatTransaction from './chat/GroupChatTransaction.js';
 import RewardShareTransaction from './reward-share/RewardShareTransaction.js'
@@ -13,6 +15,8 @@ import PublicizeTransaction from './PublicizeTransaction.js'
 export const transactionTypes = {
     2: PaymentTransaction,
     3: RegisterNameTransaction,
+    5: SellNameTransaction,
+    6: CancelSellNameTransaction,
     17: MessageTransaction,
     18: ChatTransaction,
     181: GroupChatTransaction,

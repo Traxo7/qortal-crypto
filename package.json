@@ -1,12 +1,13 @@
 {
   "name": "qortal-ui-crypto",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "main": "src/index.js",
   "repository": "https://github.com/Traxo7/qortal-ui-crypto.git",
   "author": "QORTAL <admin@qortal.org>",
   "license": "MIT",
   "dependencies": {
     "asmcrypto.js": "^2.3.2",
+    "bcryptjs": "^2.4.3",
     "buffer": "^5.6.0",
     "jssha": "^3.1.1",
     "lodash": "^4.17.19"

@@ -9,6 +9,8 @@ import { base58PublicKeyToAddress } from '../api/wallet/base58PublicKeyToAddress
 
 import signTradeBotTransaction from '../api/transactions/trade-portal/tradebot/signTradeBotTransaction'
 
+import Base58 from '../api/deps/Base58'
+
 const tradeBot = {
   signTradeBotTransaction
 }
@@ -23,5 +25,6 @@ const Qortal = {
   transactionTypes,
   base58PublicKeyToAddress,
   tradeBot,
+  Base58,
 }
 export default Qortal

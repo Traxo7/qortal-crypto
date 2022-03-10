@@ -1,9 +1,9 @@
 ### Installation
 
-`yarn add qortal-ui-crypto`
+`yarn add qortal-crypto`
 
 ### Usage
-`import Qortal from 'qortal-ui-crypto'`
+`import Qortal from 'qortal-crypto'`
 
 <hr>
 

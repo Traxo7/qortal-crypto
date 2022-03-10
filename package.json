@@ -1,12 +1,12 @@
 {
-  "name": "qortal-ui-crypto",
+  "name": "qortal-crypto",
   "keywords": [
     "qortal",
     "crypto"
   ],
-  "version": "2.3.2",
+  "version": "0.1.0",
   "main": "src/index.js",
-  "repository": "https://github.com/Traxo7/qortal-ui-crypto.git",
+  "repository": "https://github.com/Traxo7/qortal-crypto.git",
   "author": "QORTAL <admin@qortal.org>",
   "license": "MIT",
   "dependencies": {

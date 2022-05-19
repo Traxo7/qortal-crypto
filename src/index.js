@@ -12,6 +12,7 @@ import { computePow } from '../api/computePow'
 
 import signTradeBotTransaction from '../api/transactions/trade-portal/tradebot/signTradeBotTransaction'
 import generateChatReference from '../api/utils/generateChatReference'
+import { decryptChatMessage } from '../api/transactions/chat/decryptChatMessage'
 
 import Base58 from '../api/deps/Base58'
 
@@ -34,5 +35,6 @@ const Qortal = {
   signChat,
   signArbitrary,
   generateChatReference,
+  decryptChatMessage,
 }
 export default Qortal

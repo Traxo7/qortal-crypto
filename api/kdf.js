@@ -10,11 +10,12 @@ const combineKeyParts = (keyParts) => {
 export const kdf = async (key, salt) => {
   let workers = []
   const promises = []
+  const _salt = JSON.parse(JSON.stringify(salt))
 
   for (let i = 0; i < config.kdfThreads; i++) {
     promises[i] = new Promise((res) => {
       workers[i] = new Worker('./kdfWorker.js', { type: 'module' })
-      workers[i].postMessage({ seed: key, salt: salt, nonce: i })
+      workers[i].postMessage({ seed: key, salt: _salt, nonce: i })
 
       workers[i].onmessage = e => {
         workers[i].terminate()

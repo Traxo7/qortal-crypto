@@ -10,7 +10,12 @@ const combineKeyParts = (keyParts) => {
 export const kdf = async (key, salt) => {
   let workers = []
   const promises = []
-  const _salt = JSON.parse(JSON.stringify(salt))
+  let _salt
+  if (salt) {
+    _salt = JSON.parse(JSON.stringify(salt))
+  } else {
+    _salt = void 0
+  }
 
   for (let i = 0; i < config.kdfThreads; i++) {
     promises[i] = new Promise((res) => {

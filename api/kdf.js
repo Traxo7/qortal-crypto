@@ -7,8 +7,12 @@ const combineKeyParts = (keyParts) => {
   return new Sha512().process(data).finish().result
 }
 
+let workers = []
+for (let i = 0; i < config.kdfThreads; i++) {
+  workers[i] = new Worker('./kdfWorker.js', { type: 'module' })
+}
+
 export const kdf = async (key, salt) => {
-  let workers = []
   const promises = []
   let _salt
   if (salt) {
@@ -19,16 +23,10 @@ export const kdf = async (key, salt) => {
 
   for (let i = 0; i < config.kdfThreads; i++) {
     promises[i] = new Promise((res) => {
-      workers[i] = new Worker('./kdfWorker.js', { type: 'module' })
+      workers[i].onmessage = e => res(e.data)
       workers[i].postMessage({ seed: key, salt: _salt, nonce: i })
-
-      workers[i].onmessage = e => {
-        workers[i].terminate()
-        res(e.data)
-      }
     })
   }
   const keyParts = await Promise.all(promises)
-  workers = null
   return combineKeyParts(keyParts)
 }

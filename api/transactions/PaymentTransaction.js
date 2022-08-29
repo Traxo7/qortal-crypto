@@ -27,7 +27,7 @@ export default class PaymentTransaction extends TransactionBase {
         this._recipient = recipient instanceof Uint8Array ? recipient : this.constructor.Base58.decode(recipient)
     }
     set amount(amount) {
-        this._amount = amount * QORT_DECIMALS
+        this._amount = Math.round(amount * QORT_DECIMALS)
         this._amountBytes = this.constructor.utils.int64ToBytes(this._amount)
     }
     get params() {

@@ -4,7 +4,7 @@
     "qortal",
     "crypto"
   ],
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "src/index.js",
   "repository": "https://github.com/Traxo7/qortal-crypto.git",
   "author": "QORTAL <admin@qortal.org>",

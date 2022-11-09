@@ -190,6 +190,7 @@ export default class PhraseWallet {
             dogeWallet,
             dgbWallet,
             rvnWallet,
+            arrrWallet,
             qoraAddress,
             keyPair: {
                 publicKey: addrKeyPair.publicKey,

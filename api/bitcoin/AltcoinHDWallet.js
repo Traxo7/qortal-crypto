@@ -276,6 +276,8 @@ export default class AltcoinHDWallet {
 
     const privateKeyHash = seedHash.slice(0, 32);
 
+    this.seed58 = Base58.encode(privateKeyHash);
+
     const _privateKeyHash = [...privateKeyHash]
     let privateKeyBigInt = BigInteger.fromByteArrayUnsigned(_privateKeyHash);
 
@@ -349,6 +351,13 @@ export default class AltcoinHDWallet {
 
     // Append 1 byte '0x00' (to make the key data 33 bytes, DO THIS ONLY FOR PRIVATE KEYS )
     s.push(0)
+
+    //if the private key length is less than 32 let's add leading zeros
+    if(this.privateKey.length<32){
+      for(let i=this.privateKey.length;i<32;i++){
+        s.push(0)
+      }
+    }
 
     // Append Private Key
     s.push(...this.privateKey)
@@ -681,7 +690,13 @@ export default class AltcoinHDWallet {
        */
 
         // Append Address Prefix
-      const k = [this.versionBytes.mainnet.prefix].concat(...this.grandChildPublicKeyHash)
+      let prefix = [this.versionBytes.mainnet.prefix]
+      if (2 == this.versionBytes.mainnet.prefix.length) {
+        prefix = [this.versionBytes.mainnet.prefix[0]]
+        prefix.push([this.versionBytes.mainnet.prefix[1]])
+      }
+
+      const k = prefix.concat(...this.grandChildPublicKeyHash)
 
       // Derive Checksum
       const _addressCheckSum = new Sha256().process(new Sha256().process(new Uint8Array(k)).finish().result).finish().result
@@ -852,6 +867,7 @@ export default class AltcoinHDWallet {
       derivedMasterPublicKey: this.masterPublicKey,
       _tDerivedMasterPrivateKey: this._tMasterPrivateKey,
       _tDerivedmasterPublicKey: this._tmasterPublicKey,
+      seed58: this.seed58,
       // derivedPrivateChildKey: this.xPrivateChildKey,
       // derivedPublicChildKey: this.xPublicChildKey,
       // derivedPrivateGrandChildKey: this.xPrivateGrandChildKey,

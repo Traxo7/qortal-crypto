@@ -1,5 +1,6 @@
 export const computePow = async (bytes, difficulty) => {
-  let worker = new Worker('./computePowWorker.js', { type: 'module' })
+  const computePowWorkerPath = (window && window.computePowWorkerPath) || './computePowWorker.js'
+  let worker = new Worker(computePowWorkerPath, { type: 'module' })
   return await new Promise((res, rej) => {
     const obj = { bytes, difficulty }
     worker.postMessage(obj)

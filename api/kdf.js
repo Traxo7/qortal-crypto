@@ -8,8 +8,9 @@ const combineKeyParts = (keyParts) => {
 }
 
 let workers = []
+const kdfWorkerPath = (window && window.kdfWorkerPath) || './kdfWorker.js'
 for (let i = 0; i < config.kdfThreads; i++) {
-  workers[i] = new Worker('./kdfWorker.js', { type: 'module' })
+  workers[i] = new Worker(kdfWorkerPath, { type: 'module' })
 }
 
 export const kdf = async (key, salt) => {

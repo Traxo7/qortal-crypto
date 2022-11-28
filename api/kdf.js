@@ -7,13 +7,21 @@ const combineKeyParts = (keyParts) => {
   return new Sha512().process(data).finish().result
 }
 
+
 let workers = []
-const kdfWorkerPath = (window && window.kdfWorkerPath) || './kdfWorker.js'
-for (let i = 0; i < config.kdfThreads; i++) {
-  workers[i] = new Worker(kdfWorkerPath, { type: 'module' })
+if (!window.kdfWorkers) {
+  const kdfWorkerPath = (window && window.kdfWorkerPath) || './kdfWorker.js'
+  for (let i = 0; i < config.kdfThreads; i++) {
+    workers[i] = new Worker(kdfWorkerPath, { type: 'module' })
+  }
+} else {
+  workers = window.kdfWorkers
 }
 
 export const kdf = async (key, salt) => {
+  if (window.kdfWorkers) {
+    workers = window.kdfWorkers
+  }
   const promises = []
   let _salt
   if (salt) {
